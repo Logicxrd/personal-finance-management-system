@@ -1,4 +1,4 @@
-# HumCash – Frontend![humcash-logo](https://github.com/user-attachments/assets/cc1b58d2-4ad7-482b-aeb1-cbb7d8fc59ef)
+# HumCash – Frontend
 
 HumCash is a mobile-first personal finance management application powered by React Native. 
 ---
