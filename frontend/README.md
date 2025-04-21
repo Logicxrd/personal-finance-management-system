@@ -1,70 +1,82 @@
-# Getting Started with Create React App
+# HumCash – Personal Finance Manager
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+HumCash is a mobile-first personal finance management application built using React Native. Designed with simplicity and functionality in mind, it helps users track their income, expenses, budgets, and savings goals. Inspired by popular finance apps like NerdWallet, HumCash empowers users to make better financial decisions while ensuring ethical and responsible spending habits.
 
-## Available Scripts
+---
 
-In the project directory, you can run:
+## 👨‍💻 Project Contributors
+
+- **Tairique Davis** (Lead Frontend Developer | Security Implementation)  
+- **Sanithu Hulathduwage** (Team Lead | Back end Developer)
+- **Breckin Hume** (Frontend Developer | Technical Documentation)
+- **Austin Morris** (Lead Backend Developer)
+- **Sudhir Ray** (Database)
+
+---
+
+## 🚀 Features
+
+### 💰 Transaction Management
+- Input, edit, and delete income or expense transactions.
+
+### 🗂 Categorization
+- Assign transactions to predefined categories such as Food, Rent, Entertainment, etc.
+- Use dropdowns for easy selection.
+
+### 📊 Budgeting
+- Set budgets per category or overall.
+- Alerts when spending exceeds budget.
+
+### 🎯 Savings Goals
+- Create and track progress toward financial goals.
+
+### 📈 Reporting & Visualization
+- Generate pie charts and summaries for financial activity.
+
+### 🔔 Alerts & Guidance
+- Notifications for overspending.
+- Ethical guidelines like rent ≤ 30% of income.
+
+### 🔐 Authentication
+- No login required. Secured via phone-based authentication.
+
+---
+
+## 🧪 Development Scripts
+
+Run the following commands in your project directory:
 
 ### `npm start`
-
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
-
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+Starts the development server.  
+View at [http://localhost:3000](http://localhost:3000).
 
 ### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Launches the test runner.
 
 ### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Creates a production build in the `build` folder.
 
 ### `npm run eject`
+Exposes the full configuration if needed.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+---
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## 📚 Learn More
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+- [React Native Documentation](https://reactnative.dev/)
+- [Create React App Guide](https://facebook.github.io/create-react-app/docs/getting-started)
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+---
 
-## Learn More
+## 🖼 Future Enhancements
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+- Dark mode support  
+- Cloud sync  
+- Multi-currency support  
+- Scheduled recurring transactions  
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+---
 
-### Code Splitting
+## 🏫 Acknowledgments
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+This project was developed as part of the Software Engineering course at **Midwestern State University**, aiming to solve real-world financial tracking challenges faced by college students and young professionals.
