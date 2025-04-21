@@ -1,12 +1,9 @@
 # 💸 HumCash – Personal Finance Manager
 
-![HumCash Banner](https://github.com/user-attachments/assets/287f89c6-ff55-4057-bf69-78566b298057)
-
 
 A intuitive money management app that helps you track spending, save smarter, and achieve financial wellness.
 
 ![React Native](https://img.shields.io/badge/React_Native-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
-![Firebase](https://img.shields.io/badge/Firebase-FFCA28?style=for-the-badge&logo=firebase&logoColor=black)
 ![Node.js](https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white)
 
 ## 🌟 About
