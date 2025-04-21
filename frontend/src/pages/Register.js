@@ -132,6 +132,7 @@ const Register = () => {
                 Legal first name
               </label>
               <input
+                className="name-input"
                 id="firstName"
                 type="text"
                 value={firstName}
@@ -146,6 +147,7 @@ const Register = () => {
                 Legal last name
               </label>
               <input
+                className="name-input"
                 id="lastName"
                 type="text"
                 value={lastName}
