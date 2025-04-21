@@ -7,6 +7,7 @@ import {
 } from "react-router-dom";
 import Loading from "./pages/Loading";
 import Login from "./pages/Login";
+import Register from "./pages/Register"; // Import the new Register component
 import Dashboard from "./pages/Dashboard";
 import "./App.css";
 
@@ -33,6 +34,8 @@ function App() {
           {/* Default route should redirect to loading */}
           <Route exact path="/loading" element={<Loading />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />{" "}
+          {/* Add new register route */}
           <Route
             path="/dashboard"
             element={

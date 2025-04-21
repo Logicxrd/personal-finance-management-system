@@ -6,7 +6,7 @@
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  padding: 60px 20px 40px;
+  padding: 0 0 85px;
   background-color: #ffffff;
   overflow: hidden;
 }
@@ -20,11 +20,16 @@
 
 .login-card {
   width: 100%;
-  max-width: 380px;
+  max-width: 480px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: white;
+  background-image: url("../assets/background1.jpg");
+  background-size: cover; /* Ensures the image covers the entire background */
+  background-position: center; /* Centers the image */
+  background-repeat: no-repeat; /* Prevents the image from repeating */
+  height: 100vh; /* Ensures the body takes up the full viewport height */
+  margin: 0; /* Removes default body margin */
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
   padding: 32px 24px;
@@ -74,8 +79,8 @@
   width: 100%;
   max-width: 300px;
   padding: 16px;
-  background-color: #e6e6fa; /* Lavender color */
-  color: #333;
+  background-color: #d8d8ff; /* Lavender color */
+  color: #000000;
   border: none;
   border-radius: 8px;
   font-size: 18px;
@@ -87,7 +92,7 @@
 }
 
 .get-started-button:hover {
-  background-color: #d8d8ff; /* Slightly darker lavender on hover */
+  background-color: #c2c2fe; /* Slightly darker lavender on hover */
   transform: translateY(-2px);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
@@ -97,6 +102,7 @@
   font-size: 18px;
   color: #000000;
   margin: 0;
+  font-weight: 100;
   text-align: center;
   white-space: pre-line; /* respects line breaks in the text */
 }
