@@ -1,82 +1,69 @@
-# HumCash – Personal Finance Manager
+# 💸 HumCash – Personal Finance Manager
 
-HumCash is a mobile-first personal finance management application built using React Native. Designed with simplicity and functionality in mind, it helps users track their income, expenses, budgets, and savings goals. Inspired by popular finance apps like NerdWallet, HumCash empowers users to make better financial decisions while ensuring ethical and responsible spending habits.
+![HumCash Banner](https://github.com/user-attachments/assets/287f89c6-ff55-4057-bf69-78566b298057)
 
----
 
-## 👨‍💻 Project Contributors
+A intuitive money management app that helps you track spending, save smarter, and achieve financial wellness.
 
-- **Tairique Davis** (Lead Frontend Developer | Security Implementation)  
-- **Sanithu Hulathduwage** (Team Lead | Back end Developer)
-- **Breckin Hume** (Frontend Developer | Technical Documentation)
-- **Austin Morris** (Lead Backend Developer)
-- **Sudhir Ray** (Database)
+![React Native](https://img.shields.io/badge/React_Native-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
+![Firebase](https://img.shields.io/badge/Firebase-FFCA28?style=for-the-badge&logo=firebase&logoColor=black)
+![Node.js](https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white)
 
----
+## 🌟 About
 
-## 🚀 Features
+HumCash is a mobile-first personal finance management application built using React Native. Designed with simplicity and functionality in mind, it helps users:
 
-### 💰 Transaction Management
-- Input, edit, and delete income or expense transactions.
+- Track income & expenses 📊
+- Manage budgets 💰
+- Achieve savings goals 🎯
+- Make ethical financial decisions 🤝
 
-### 🗂 Categorization
-- Assign transactions to predefined categories such as Food, Rent, Entertainment, etc.
-- Use dropdowns for easy selection.
-
-### 📊 Budgeting
-- Set budgets per category or overall.
-- Alerts when spending exceeds budget.
-
-### 🎯 Savings Goals
-- Create and track progress toward financial goals.
-
-### 📈 Reporting & Visualization
-- Generate pie charts and summaries for financial activity.
-
-### 🔔 Alerts & Guidance
-- Notifications for overspending.
-- Ethical guidelines like rent ≤ 30% of income.
-
-### 🔐 Authentication
-- No login required. Secured via phone-based authentication.
+Inspired by popular finance apps like NerdWallet, HumCash empowers users to take control of their finances.
 
 ---
 
-## 🧪 Development Scripts
+## 👥 Project Team
 
-Run the following commands in your project directory:
-
-### `npm start`
-Starts the development server.  
-View at [http://localhost:3000](http://localhost:3000).
-
-### `npm test`
-Launches the test runner.
-
-### `npm run build`
-Creates a production build in the `build` folder.
-
-### `npm run eject`
-Exposes the full configuration if needed.
+| Role | Contributor | Responsibilities |
+|------|------------|------------------|
+| **Lead Frontend** | Tairique Davis | Frontend Development, Security |
+| **Team Lead** | Sanithu Hulathduwage | Backend Development |
+| **Frontend** | Breckin Hume | UI Development, Documentation |
+| **Lead Backend** | Austin Morris | API Development |
+| **Database** | Sudhir Ray | Database Architecture |
 
 ---
 
-## 📚 Learn More
+## ✨ Key Features
 
-- [React Native Documentation](https://reactnative.dev/)
-- [Create React App Guide](https://facebook.github.io/create-react-app/docs/getting-started)
+### 📱 Core Functionality
+| Feature | Description | Emoji |
+|---------|-------------|-------|
+| **Transaction Management** | Add, edit, delete income/expenses | 💳 |
+| **Smart Categorization** | Auto-categorize with dropdowns | 🗂️ |
+| **Budget Tracking** | Set limits with overspending alerts | 🏦 |
+| **Savings Goals** | Visual progress tracking | 🎯 |
+
+### 📊 Advanced Tools
+| Feature | Description | Emoji |
+|---------|-------------|-------|
+| **Financial Reports** | Interactive pie charts & summaries | 📈 |
+| **Spending Alerts** | Ethical guidelines notifications | 🔔 |
+| **Secure Auth** | Phone-based authentication | 🔐 |
 
 ---
 
-## 🖼 Future Enhancements
+## 🛠 Development
 
-- Dark mode support  
-- Cloud sync  
-- Multi-currency support  
-- Scheduled recurring transactions  
+```bash
+# Install dependencies
+npm install
 
----
+# Start development server
+npm start
 
-## 🏫 Acknowledgments
+# Run tests
+npm test
 
-This project was developed as part of the Software Engineering course at **Midwestern State University**, aiming to solve real-world financial tracking challenges faced by college students and young professionals.
+# Create production build
+npm run build
