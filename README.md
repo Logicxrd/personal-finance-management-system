@@ -22,7 +22,7 @@ Inspired by popular finance apps like NerdWallet, HumCash empowers users to take
 | Role | Contributor | Responsibilities |
 |------|------------|------------------|
 | **Lead Frontend** | Tairique Davis | Frontend Development, Security |
-| **Team Lead** | Sanithu Hulathduwage | Backend Development |
+| **Team Lead** | Sanithu Hulathduwage | UI Design, Backend Development, Database Structure, Security|
 | **Frontend** | Breckin Hume | UI Development, Documentation |
 | **Lead Backend** | Austin Morris | API Development |
 | **Database** | Sudhir Ray | Database Architecture |
