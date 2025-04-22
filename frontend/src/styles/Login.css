@@ -12,31 +12,40 @@
 .login-card {
   width: 100%;
   max-width: 380px;
+  min-height: min-content;
   display: flex;
   flex-direction: column;
   align-items: center;
   background-image: url("../assets/background1.jpg");
-  background-size: cover; /* Ensures the image covers the entire background */
-  background-position: center; /* Centers the image */
-  background-repeat: no-repeat; /* Prevents the image from repeating */
-  height: 100vh; /* Ensures the body takes up the full viewport height */
-  margin: 0; /* Removes default body margin */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
   padding: 32px 24px;
+  box-sizing: border-box;
 }
 
+/* Top/Logo Section - Updated to match successful approach from Loading.css */
 .logo {
+  width: 100%;
   display: flex;
-  align-items: center;
   justify-content: center;
+  align-items: center;
   margin-bottom: 40px;
 }
 
 .app-logo {
   width: 90px;
   height: 90px;
-  margin-left: 8px;
+  object-fit: contain;
+}
+
+/* Form Section */
+form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 .login-title {
@@ -44,11 +53,7 @@
   font-weight: 600;
   color: #000;
   margin-bottom: 12px;
-  align-self: center;
-}
-
-form {
-  width: 100%;
+  text-align: center;
 }
 
 .input-group {
@@ -139,7 +144,7 @@ input::placeholder {
 }
 
 .secondary-button:hover {
-  background-color: #000000; /* Slightly darker lavender on hover */
+  background-color: #000000;
   transform: translateY(-2px);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
@@ -165,4 +170,50 @@ input::placeholder {
   font-size: 14px;
   text-align: center;
   margin-top: 8px;
+}
+
+/* For smaller screens */
+@media (max-width: 480px) {
+  .login-card {
+    padding: 24px 16px;
+  }
+
+  .logo {
+    margin-bottom: 30px;
+  }
+
+  .app-logo {
+    width: 70px;
+    height: 70px;
+  }
+
+  .login-title {
+    font-size: 24px;
+    margin-bottom: 8px;
+  }
+
+  .input-group {
+    margin-bottom: 15px;
+  }
+
+  input {
+    padding: 12px;
+  }
+
+  .primary-button,
+  .secondary-button {
+    padding: 12px;
+  }
+}
+
+/* For larger screens */
+@media (min-height: 900px) {
+  .logo {
+    margin-bottom: 60px; /* More spacing on taller screens */
+  }
+
+  .app-logo {
+    width: 120px;
+    height: 120px;
+  }
 }

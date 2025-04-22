@@ -1,42 +1,42 @@
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: white;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica,
+    Arial, sans-serif;
+  padding: 16px;
+}
+
 .login-card {
   width: 100%;
   max-width: 380px;
+  min-height: min-content;
   display: flex;
   flex-direction: column;
   align-items: center;
   background-image: url("../assets/background1.jpg");
-  background-size: cover; /* Ensures the image covers the entire background */
-  background-position: center; /* Centers the image */
-  background-repeat: no-repeat; /* Prevents the image from repeating */
-  margin: 0; /* Removes default body margin */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
   padding: 32px 24px;
+  box-sizing: border-box;
 }
 
 .logo {
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 40px;
+  margin-bottom: 30px;
 }
 
 .app-logo {
   width: 90px;
   height: 90px;
   margin-left: 8px;
-}
-
-.input-label {
-  display: block;
-  font-size: 16px;
-  color: #525252;
-  margin-bottom: 8px;
-  font-weight: 500;
-}
-
-.name-input {
-  font-weight: 900;
 }
 
 .login-card form {
@@ -53,7 +53,47 @@
   align-self: center;
 }
 
-/* Update the primary button colors to be blue */
+.description {
+  color: #666;
+  font-size: 14px;
+  text-align: center;
+  margin-bottom: 16px;
+}
+
+.input-group {
+  margin-bottom: 16px;
+  width: 100%;
+}
+
+.input-label {
+  display: block;
+  font-size: 16px;
+  color: #525252;
+  margin-bottom: 8px;
+  font-weight: 500;
+}
+
+input {
+  width: 100%;
+  padding: 16px;
+  border: 1px solid #e1e1e1;
+  border-radius: 8px;
+  font-size: 16px;
+  transition: border-color 0.2s;
+  box-sizing: border-box;
+}
+
+.name-input {
+  font-weight: 500;
+}
+
+.error-message {
+  color: #e74c3c;
+  font-size: 14px;
+  margin-bottom: 16px;
+}
+
+/* Primary button styles */
 .primary-button {
   width: 100%;
   padding: 16px;
@@ -69,7 +109,85 @@
 }
 
 .primary-button:hover {
-  background-color: #bdbdfc; /* Slightly darker green on hover */
+  background-color: #bdbdfc;
   transform: translateY(-2px);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.primary-button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.divider {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  margin: 24px 0;
+}
+
+.divider hr {
+  flex: 1;
+  border: none;
+  height: 1px;
+  background-color: #e1e1e1;
+}
+
+.divider span {
+  padding: 0 16px;
+  font-size: 14px;
+  color: #999;
+}
+
+.secondary-button {
+  width: 100%;
+  padding: 16px;
+  background-color: #000000;
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.secondary-button:hover {
+  background-color: #000000;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* For smaller screens */
+@media (max-width: 480px) {
+  .login-card {
+    padding: 24px 16px;
+  }
+
+  .logo {
+    margin-bottom: 24px;
+  }
+
+  .app-logo {
+    width: 70px;
+    height: 70px;
+  }
+
+  .login-title {
+    font-size: 24px;
+  }
+
+  .input-label {
+    font-size: 14px;
+  }
+
+  input {
+    padding: 12px;
+  }
+
+  .primary-button,
+  .secondary-button {
+    padding: 12px;
+    font-size: 14px;
+  }
 }

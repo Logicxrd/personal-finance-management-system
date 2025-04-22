@@ -3,83 +3,92 @@
   width: 100%;
   height: 100vh;
   display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
-  padding: 0 0 85px;
   background-color: #ffffff;
   overflow: hidden;
+}
+
+.login-card {
+  width: 100%;
+  max-width: 480px;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  background-image: url("../assets/background1.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  padding: 32px 24px;
+  box-sizing: border-box;
+}
+
+/* Top section - App name */
+.header-section {
+  width: 100%;
+  text-align: center;
+  padding-top: 20px;
+}
+
+.app-name {
+  font-family: cursive, sans-serif;
+  font-style: normal;
+  font-weight: 900;
+  font-size: 36px;
+  line-height: 150%;
+  letter-spacing: 0.04em;
+  color: #0221bad6;
+  margin: 0;
+}
+
+/* Middle section - Logo */
+.center-section {
+  display: flex;
+  flex: 1;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
 }
 
 .logo-container {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 10vh;
-}
-
-.login-card {
-  width: 100%;
-  max-width: 480px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background-image: url("../assets/background1.jpg");
-  background-size: cover; /* Ensures the image covers the entire background */
-  background-position: center; /* Centers the image */
-  background-repeat: no-repeat; /* Prevents the image from repeating */
-  height: 100vh; /* Ensures the body takes up the full viewport height */
-  margin: 0; /* Removes default body margin */
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-  padding: 32px 24px;
 }
 
 .app-logo {
   width: 190px;
   height: 190px;
-  margin-bottom: 20px;
-  /* Add slight animation for visual appeal */
   animation: pulse 2s infinite alternate ease-in-out;
 }
 
 @keyframes pulse {
   from {
-    transform: scale(1);
+    transform: scale(1.5);
   }
   to {
-    transform: scale(1.05);
+    transform: scale(1.8);
   }
 }
 
-.app-name {
-  font-family: "Inter", sans-serif;
-  font-style: normal;
-  font-weight: 600;
-  font-size: 36px;
-  line-height: 150%;
-  display: flex;
-  align-items: center;
-  text-align: center;
-  letter-spacing: -0.01em;
-  color: #000000;
-  margin: 0;
-  margin-bottom: 180px;
-}
-
+/* Bottom section - Button and motto */
 .bottom-section {
   width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-bottom: 5vh;
+  padding-bottom: 20px;
 }
 
 .get-started-button {
   width: 100%;
   max-width: 300px;
   padding: 16px;
-  background-color: #d8d8ff; /* Lavender color */
+  background-color: #d8d8ff;
   color: #000000;
   border: none;
   border-radius: 8px;
@@ -92,7 +101,7 @@
 }
 
 .get-started-button:hover {
-  background-color: #c2c2fe; /* Slightly darker lavender on hover */
+  background-color: #c2c2fe;
   transform: translateY(-2px);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
@@ -104,21 +113,27 @@
   margin: 0;
   font-weight: 100;
   text-align: center;
-  white-space: pre-line; /* respects line breaks in the text */
+  white-space: pre-line;
 }
 
 /* For smaller devices */
 @media (max-height: 600px) {
-  .logo-container {
-    margin-top: 5vh;
-  }
-
   .app-logo {
     width: 120px;
     height: 120px;
   }
 
   .app-name {
-    font-size: 32px;
+    font-size: 28px;
+  }
+
+  .get-started-button {
+    padding: 12px;
+    font-size: 16px;
+    margin-bottom: 20px;
+  }
+
+  .app-motto {
+    font-size: 14px;
   }
 }

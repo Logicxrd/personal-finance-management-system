@@ -27,23 +27,31 @@ const Loading = () => {
 
   return (
     <div className="loading-screen">
-      <div className="logo-container">
-        <div className="login-card">
-          <img src={humcashLogo} alt="HumCash Logo" className="app-logo" />
-          <h1 className="app-name">HumCash</h1>
+      <div className="login-card">
+        {/* Top section - App name */}
+        <div className="header-section">
+          <h1 className="app-name">ℍ𝕌𝕄ℂ𝔸𝕊ℍ</h1>
+        </div>
 
-          <div className="bottom-section">
-            <button className="get-started-button" onClick={handleGetStarted}>
-              {isExistingUser ? "Login" : "Get Started"}
-            </button>
-            <p className="app-motto">
-              Secure. Smart. Simplified.
-              <br />
-              <span style={{ paddingLeft: "20px" }}>
-                ~Your little Hummingbird.
-              </span>
-            </p>
+        {/* Middle section - Logo */}
+        <div className="center-section">
+          <div className="logo-container">
+            <img src={humcashLogo} alt="HumCash Logo" className="app-logo" />
           </div>
+        </div>
+
+        {/* Bottom section - Button and motto */}
+        <div className="bottom-section">
+          <button className="get-started-button" onClick={handleGetStarted}>
+            {isExistingUser ? "Login" : "Get Started"}
+          </button>
+          <p className="app-motto">
+            Secure. Smart. Simplified.
+            <br />
+            <span style={{ paddingLeft: "20px" }}>
+              ~Your little Hummingbird.
+            </span>
+          </p>
         </div>
       </div>
     </div>
