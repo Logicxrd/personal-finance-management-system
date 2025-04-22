@@ -6,11 +6,25 @@ import humcashLogo from "../assets/humcash-logo.png";
 const Dashboard = () => {
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState("Home");
+  const [menuOpen, setMenuOpen] = useState(false);
 
   // Logout function
   const handleLogout = () => {
     localStorage.removeItem("isAuthenticated");
     navigate("/");
+  };
+
+  // Toggle menu
+  const toggleMenu = () => {
+    setMenuOpen(!menuOpen);
+  };
+
+  // Handle navigation
+  const handleNavigation = (path) => {
+    setMenuOpen(false);
+    // In a real app, you would navigate to these routes
+    console.log(`Navigating to: ${path}`);
+    // navigate(path); // Uncomment when routes are set up
   };
 
   // Mock data for the dashboard
@@ -30,8 +44,8 @@ const Dashboard = () => {
       { date: "30", value: 48000 },
     ],
     recentExpenses: [
-      { id: 1, merchant: "Walmart", amount: 89.72, icon: "🛒" }, // Changed to shopping cart icon
-      { id: 2, merchant: "Uber", amount: 8.69, icon: "🚗" }, // Changed to car icon
+      { id: 1, merchant: "Walmart", amount: 89.72, icon: "🛒" },
+      { id: 2, merchant: "Uber", amount: 8.69, icon: "🚗" },
       // Add more expenses as needed
     ],
   };
@@ -39,13 +53,84 @@ const Dashboard = () => {
   return (
     <div className="dashboard-container">
       <header className="dashboard-header">
+        <div className="hamburger-menu">
+          <div className="hamburger-icon" onClick={toggleMenu}>
+            ☰
+          </div>
+          {menuOpen && (
+            <div className="menu-dropdown">
+              <div className="menu-header">
+                <h2>Menu</h2>
+                <span className="close-menu" onClick={toggleMenu}>
+                  ✕
+                </span>
+              </div>
+
+              <div
+                className="menu-item"
+                onClick={() => handleNavigation("/personal-info")}
+              >
+                <div className="menu-item-content">
+                  <h3>Personal info</h3>
+                  <p>Name, email, phone number</p>
+                </div>
+                <span className="menu-arrow">›</span>
+              </div>
+
+              <div
+                className="menu-item"
+                onClick={() => handleNavigation("/financial-info")}
+              >
+                <div className="menu-item-content">
+                  <h3>Financial info</h3>
+                  <p>Linked financial institutions, cards...</p>
+                </div>
+                <span className="menu-arrow">›</span>
+              </div>
+
+              <div
+                className="menu-item"
+                onClick={() => handleNavigation("/settings")}
+              >
+                <div className="menu-item-content">
+                  <h3>Settings</h3>
+                  <p>Notifications, security, close my a...</p>
+                </div>
+                <span className="menu-arrow">›</span>
+              </div>
+
+              <div
+                className="menu-item"
+                onClick={() => handleNavigation("/support")}
+              >
+                <div className="menu-item-content">
+                  <h3>Support</h3>
+                  <p>Help center, contact us</p>
+                </div>
+                <span className="menu-arrow">›</span>
+              </div>
+
+              <div
+                className="menu-item"
+                onClick={() => handleNavigation("/legal")}
+              >
+                <div className="menu-item-content">
+                  <h3>Legal</h3>
+                  <p>Terms of use, privacy policies...</p>
+                </div>
+                <span className="menu-arrow">›</span>
+              </div>
+
+              <div className="logout-button-container" onClick={handleLogout}>
+                <button className="menu-logout-button">Log out</button>
+              </div>
+            </div>
+          )}
+        </div>
         <div className="logo-container">
           <img src={humcashLogo} alt="HumCash Logo" className="header-logo" />
-          <h1>HumCash</h1>
+          <h1 className="app-title">ℍ𝕌𝕄ℂ𝔸𝕊ℍ</h1>
         </div>
-        <button className="logout-button" onClick={handleLogout}>
-          Logout
-        </button>
       </header>
 
       <nav className="main-nav">

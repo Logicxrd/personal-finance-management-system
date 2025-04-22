@@ -16,6 +16,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: space-between; /* Add this to distribute space */
   background-image: url("../assets/background1.jpg");
   background-size: cover;
   background-position: center;
@@ -26,13 +27,13 @@
   box-sizing: border-box;
 }
 
-/* Top/Logo Section - Updated to match successful approach from Loading.css */
+/* Top/Logo Section */
 .logo {
   width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-bottom: 40px;
+  flex: 1; /* This will allow it to take up available space */
 }
 
 .app-logo {
@@ -46,6 +47,7 @@ form {
   width: 100%;
   display: flex;
   flex-direction: column;
+  margin-top: auto;
 }
 
 .login-title {

@@ -15,58 +15,175 @@
 .dashboard-header {
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-end;
   padding: 20px;
   background-image: url("../assets/background1.jpg");
   background-size: cover;
   background-position: center;
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
   height: 120px;
-  position: relative; /* Added to position logout button absolutely */
+  position: relative;
 }
 
 .logo-container {
   display: flex;
+  flex-direction: row; /* Ensure horizontal layout */
   align-items: center;
   justify-content: center;
 }
 
 .header-logo {
-  width: 60px;
-  height: 60px;
-  margin-right: 12px;
-  margin: 0;
+  width: 50px; /* Slightly smaller logo */
+  height: 50px;
+  margin-right: 8px; /* Space between logo and text */
+  vertical-align: middle;
 }
 
-.dashboard-header h1 {
+.app-title {
+  font-family: cursive, sans-serif;
+  font-style: normal;
   font-size: 32px;
-  margin: 0;
-  margin-bottom: 50px;
   font-weight: 600;
-  color: #000;
+  letter-spacing: -0.08em;
+  color: #0221bad6;
+  margin: 0;
+  display: inline-block; /* Make it behave like an inline element */
+  vertical-align: middle;
+  line-height: 50px; /* Match the height of the logo */
 }
 
-/* Logout Button Styles */
-.logout-button {
-  padding: 8px 16px;
-  color: #333;
-  border: none;
-  background-color: #d8d8ff;
-  border-radius: 24px;
-  font-size: 14px;
-  font-weight: 600;
+/* Hamburger Menu Styles */
+.hamburger-menu {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+}
+
+.hamburger-icon {
+  font-size: 24px;
   cursor: pointer;
+  background-color: #d8d8ff;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   transition: all 0.2s ease;
-  position: absolute; /* Position absolutely within header */
-  top: 20px;
-  right: 20px;
-  margin-bottom: 50px;
 }
 
-.logout-button:hover {
+.hamburger-icon:hover {
   background-color: #c2c2fe;
   transform: translateY(-2px);
+}
+
+.menu-dropdown {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  max-width: 400px;
+  height: 100vh;
+  background-color: white;
+  z-index: 1000;
+  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+}
+
+.menu-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  border-bottom: 1px solid #eee;
+}
+
+/* Center the Menu title */
+.menu-header h2 {
+  width: 100%;
+  text-align: center;
+  margin: 0;
+  font-size: 22px;
+  font-weight: 600;
+}
+
+.close-menu {
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.menu-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  cursor: pointer;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.menu-item:hover {
+  background-color: #f8f8f8;
+}
+
+/* Left align and style the menu items */
+.menu-item-content h3 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 800;
+  text-align: left;
+}
+
+.menu-item-content p {
+  margin: 5px 0 0;
+  color: #777;
+  font-size: 14px;
+  text-align: left;
+}
+
+.menu-arrow {
+  font-size: 24px;
+  color: #999;
+}
+
+.logout-button-container {
+  margin-top: auto;
+  padding: 20px;
+}
+
+/* Style logout button with lavender color scheme */
+.menu-logout-button {
+  width: 100%;
+  padding: 12px;
+  background-color: #d8d8ff;
+  color: #333;
+  border: none;
+  border-radius: 8px;
+  font-size: 18px;
+  font-weight: 600;
+  cursor: pointer;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+/* Add hover animation */
+.menu-logout-button:hover {
+  background-color: #c2c2fe;
+  transform: translateY(-2px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Update logo container to handle new hamburger position */
+.logo-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+}
+
+.logout-button {
+  display: none;
 }
 
 /* Navigation Styles */
