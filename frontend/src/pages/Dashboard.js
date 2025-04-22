@@ -133,35 +133,6 @@ const Dashboard = () => {
         </div>
       </header>
 
-      <nav className="main-nav">
-        <ul>
-          <li
-            className={activeTab === "Home" ? "active" : ""}
-            onClick={() => setActiveTab("Home")}
-          >
-            Home
-          </li>
-          <li
-            className={activeTab === "Expenses" ? "active" : ""}
-            onClick={() => setActiveTab("Expenses")}
-          >
-            Expenses
-          </li>
-          <li
-            className={activeTab === "Savings" ? "active" : ""}
-            onClick={() => setActiveTab("Savings")}
-          >
-            Savings
-          </li>
-          <li
-            className={activeTab === "Analytics" ? "active" : ""}
-            onClick={() => setActiveTab("Analytics")}
-          >
-            Analytics
-          </li>
-        </ul>
-      </nav>
-
       <div className="dashboard-content">
         <div className="financial-overview">
           <div className="financial-card">
@@ -231,20 +202,36 @@ const Dashboard = () => {
       </div>
 
       <footer className="app-footer">
-        <div className="footer-nav">
-          <div className="footer-icon active">
-            <span>🏠</span>
+        <nav className="footer-nav">
+          <div
+            className={`nav-item ${activeTab === "Home" ? "active" : ""}`}
+            onClick={() => setActiveTab("Home")}
+          >
+            <div className="nav-icon">🏠</div>
+            <div className="nav-label">Home</div>
           </div>
-          <div className="footer-icon">
-            <span>➕</span>
+          <div
+            className={`nav-item ${activeTab === "Expenses" ? "active" : ""}`}
+            onClick={() => setActiveTab("Expenses")}
+          >
+            <div className="nav-icon">💰</div>
+            <div className="nav-label">Expenses</div>
           </div>
-          <div className="footer-icon">
-            <span>📊</span>
+          <div
+            className={`nav-item ${activeTab === "Savings" ? "active" : ""}`}
+            onClick={() => setActiveTab("Savings")}
+          >
+            <div className="nav-icon">🏦</div>
+            <div className="nav-label">Savings</div>
           </div>
-          <div className="footer-icon">
-            <span>💳</span>
+          <div
+            className={`nav-item ${activeTab === "Analytics" ? "active" : ""}`}
+            onClick={() => setActiveTab("Analytics")}
+          >
+            <div className="nav-icon">📈</div>
+            <div className="nav-label">Analytics</div>
           </div>
-        </div>
+        </nav>
       </footer>
     </div>
   );
