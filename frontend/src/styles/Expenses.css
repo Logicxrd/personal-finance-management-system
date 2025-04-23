@@ -1,0 +1,335 @@
+/* ExpensesPage.css */
+/* Extend the existing Dashboard.css styles */
+
+.expenses-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.expenses-header h2 {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+/* Hamburger Menu Styles */
+.hamburger-menu {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+}
+
+.hamburger-icon {
+  font-size: 24px;
+  cursor: pointer;
+  background-color: #d8d8ff;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: all 0.2s ease;
+}
+
+.hamburger-icon:hover {
+  background-color: #c2c2fe;
+  transform: translateY(-2px);
+}
+
+.menu-dropdown {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  max-width: 400px;
+  height: 100vh;
+  background-color: white;
+  z-index: 1000;
+  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+}
+
+.menu-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  border-bottom: 1px solid #eee;
+}
+
+/* Center the Menu title */
+.menu-header h2 {
+  width: 100%;
+  text-align: center;
+  margin: 0;
+  font-size: 22px;
+  font-weight: 600;
+}
+
+.close-menu {
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.menu-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  cursor: pointer;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.menu-item:hover {
+  background-color: #f8f8f8;
+}
+
+/* Left align and style the menu items */
+.menu-item-content h3 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 800;
+  text-align: left;
+}
+
+.menu-item-content p {
+  margin: 5px 0 0;
+  color: #777;
+  font-size: 14px;
+  text-align: left;
+}
+
+.menu-arrow {
+  font-size: 24px;
+  color: #999;
+}
+
+.logout-button-container {
+  margin-top: auto;
+  padding: 20px;
+}
+
+/* Style logout button with lavender color scheme */
+.menu-logout-button {
+  width: 100%;
+  padding: 12px;
+  background-color: #d8d8ff;
+  color: #333;
+  border: none;
+  border-radius: 8px;
+  font-size: 18px;
+  font-weight: 600;
+  cursor: pointer;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+/* Add hover animation */
+.menu-logout-button:hover {
+  background-color: #c2c2fe;
+  transform: translateY(-2px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Update logo container to handle new hamburger position */
+.logo-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+}
+
+.add-expense-button {
+  background-color: #d8d8ff;
+  color: #333;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 16px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.add-expense-button:hover {
+  background-color: #c2c2fe;
+  transform: translateY(-2px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.expenses-list-container {
+  background-color: white;
+  border-radius: 12px;
+  padding: 16px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  margin-bottom: 16px;
+}
+
+.no-expenses {
+  text-align: center;
+  padding: 20px;
+  color: #999;
+}
+
+.expenses-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.expense-item-full {
+  display: flex;
+  align-items: center;
+  padding: 12px;
+  border-radius: 8px;
+  background-color: #f8f8f8;
+  transition: background-color 0.2s ease;
+}
+
+.expense-item-full:hover {
+  background-color: #f0f0f0;
+}
+
+.expense-details {
+  flex: 1;
+  margin-left: 16px;
+}
+
+.expense-merchant {
+  font-size: 16px;
+  font-weight: 600;
+  margin: 0;
+}
+
+.expense-category {
+  font-size: 14px;
+  color: #666;
+  margin: 4px 0 0;
+}
+
+.expense-date {
+  font-size: 12px;
+  color: #999;
+  margin: 2px 0 0;
+}
+
+.expense-amount {
+  font-size: 18px;
+  font-weight: 600;
+  margin-right: 16px;
+}
+
+.expense-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.expense-actions button {
+  background-color: #f0f0fc;
+  border: none;
+  border-radius: 4px;
+  padding: 6px 12px;
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.expense-actions button:hover {
+  background-color: #d8d8ff;
+}
+
+/* Modal styles */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal {
+  background-color: white;
+  border-radius: 12px;
+  padding: 24px;
+  width: 90%;
+  max-width: 400px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.modal h2 {
+  margin-top: 0;
+  margin-bottom: 16px;
+  font-size: 20px;
+  text-align: center;
+}
+
+.form-group {
+  margin-bottom: 16px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.form-group input,
+.form-group select {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #e1e1e1;
+  border-radius: 8px;
+  font-size: 16px;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.modal-actions button {
+  padding: 10px 16px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.modal-actions button:first-child {
+  background-color: #f0f0f0;
+  border: none;
+  color: #666;
+}
+
+.modal-actions button:last-child {
+  background-color: #d8d8ff;
+  border: none;
+  color: #333;
+}
+
+.modal-actions button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.modal-actions button:first-child:hover {
+  background-color: #e0e0e0;
+}
+
+.modal-actions button:last-child:hover {
+  background-color: #c2c2fe;
+}

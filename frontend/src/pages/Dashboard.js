@@ -1,12 +1,46 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 import "../styles/Dashboard.css";
 import humcashLogo from "../assets/humcash-logo.png";
 
 const Dashboard = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const [activeTab, setActiveTab] = useState("Home");
   const [menuOpen, setMenuOpen] = useState(false);
+  const [recentExpenses, setRecentExpenses] = useState([]);
+
+  // Function to load expenses - defined outside useEffect so we can call it directly
+  const loadExpenses = () => {
+    const savedExpenses = localStorage.getItem("expenses");
+    if (savedExpenses) {
+      try {
+        const expensesData = JSON.parse(savedExpenses);
+        // Sort by date, newest first
+        const sortedExpenses = expensesData.sort(
+          (a, b) => new Date(b.date) - new Date(a.date)
+        );
+        setRecentExpenses(sortedExpenses.slice(0, 10));
+      } catch (error) {
+        console.error("Error parsing expenses:", error);
+        setRecentExpenses([]);
+      }
+    } else {
+      setRecentExpenses([]);
+    }
+  };
+
+  // Load expenses on initial mount AND whenever the pathname changes
+  useEffect(() => {
+    loadExpenses();
+
+    // This is the key part - we create a timer to check for expense updates frequently
+    const intervalId = setInterval(() => {
+      loadExpenses();
+    }, 500); // Check every 500ms
+
+    return () => clearInterval(intervalId); // Clean up interval
+  }, [location.pathname]); // Re-run when path changes
 
   // Logout function
   const handleLogout = () => {
@@ -42,11 +76,6 @@ const Dashboard = () => {
       { date: "28", value: 39000 },
       { date: "29", value: 36000 },
       { date: "30", value: 48000 },
-    ],
-    recentExpenses: [
-      { id: 1, merchant: "Walmart", amount: 89.72, icon: "🛒" },
-      { id: 2, merchant: "Uber", amount: 8.69, icon: "🚗" },
-      // Add more expenses as needed
     ],
   };
 
@@ -188,15 +217,23 @@ const Dashboard = () => {
         <div className="expenses-section">
           <p className="section-title">Expenses</p>
           <div className="expenses-list">
-            {financialData.recentExpenses.map((expense) => (
-              <div key={expense.id} className="expense-item">
-                <div className="expense-icon">{expense.icon}</div>
-                <div className="expense-details">
-                  <p className="expense-amount">${expense.amount.toFixed(2)}</p>
-                  <p className="expense-merchant">{expense.merchant}</p>
+            {recentExpenses.length > 0 ? (
+              recentExpenses.map((expense) => (
+                <div key={expense.id} className="expense-item">
+                  <div className="expense-icon">{expense.icon}</div>
+                  <div className="expense-details">
+                    <p className="expense-amount">
+                      ${expense.amount.toFixed(2)}
+                    </p>
+                    <p className="expense-merchant">{expense.merchant}</p>
+                  </div>
                 </div>
+              ))
+            ) : (
+              <div className="no-expenses">
+                <p>No recent expenses to display.</p>
               </div>
-            ))}
+            )}
           </div>
         </div>
       </div>
@@ -205,28 +242,40 @@ const Dashboard = () => {
         <nav className="footer-nav">
           <div
             className={`nav-item ${activeTab === "Home" ? "active" : ""}`}
-            onClick={() => setActiveTab("Home")}
+            onClick={() => {
+              setActiveTab("Home");
+              loadExpenses(); // Explicitly reload expenses
+            }}
           >
             <div className="nav-icon">🏠</div>
             <div className="nav-label">Home</div>
           </div>
           <div
             className={`nav-item ${activeTab === "Expenses" ? "active" : ""}`}
-            onClick={() => setActiveTab("Expenses")}
+            onClick={() => {
+              setActiveTab("Expenses");
+              navigate("/expenses");
+            }}
           >
             <div className="nav-icon">💰</div>
             <div className="nav-label">Expenses</div>
           </div>
           <div
             className={`nav-item ${activeTab === "Savings" ? "active" : ""}`}
-            onClick={() => setActiveTab("Savings")}
+            onClick={() => {
+              setActiveTab("Savings");
+              navigate("/savings");
+            }}
           >
             <div className="nav-icon">🏦</div>
             <div className="nav-label">Savings</div>
           </div>
           <div
             className={`nav-item ${activeTab === "Analytics" ? "active" : ""}`}
-            onClick={() => setActiveTab("Analytics")}
+            onClick={() => {
+              setActiveTab("Analytics");
+              navigate("/analytics");
+            }}
           >
             <div className="nav-icon">📈</div>
             <div className="nav-label">Analytics</div>

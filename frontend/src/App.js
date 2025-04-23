@@ -9,6 +9,7 @@ import Loading from "./pages/Loading";
 import Login from "./pages/Login";
 import Register from "./pages/Register"; // Import the new Register component
 import Dashboard from "./pages/Dashboard";
+import Expenses from "./pages/Expenses";
 import "./App.css";
 
 // Simple auth check function
@@ -35,6 +36,7 @@ function App() {
           <Route exact path="/loading" element={<Loading />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />{" "}
+          <Route path="/expenses" element={<Expenses />} />{" "}
           {/* Add new register route */}
           <Route
             path="/dashboard"
