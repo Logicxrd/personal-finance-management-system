@@ -109,7 +109,11 @@ const Expenses = () => {
               </div>
               <div
                 className="menu-item"
-                onClick={() => handleNavigation("/personal-info")}
+                onClick={() => {
+                  console.log("Personal info clicked");
+                  setMenuOpen(false);
+                  navigate("/personal-info");
+                }}
               >
                 <div className="menu-item-content">
                   <h3>Personal info</h3>
