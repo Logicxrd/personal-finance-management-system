@@ -102,6 +102,7 @@ def savings ():
 def expenses ():
         return json.dumps (expense_info ())
 @app.route ("/login", methods="POST")
+# takes POST request for user_id and checks against database for validity
 def login ():
         if request.method == "POST":
                 user_id = request.form("user_id")
