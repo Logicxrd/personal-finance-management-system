@@ -113,5 +113,14 @@ def login ():
                         return json.dumps ({"ERROR": str(user_id) + " is invalid"})
         else:
                 return json.dumps ({"User ID": user_id})
+app.route ("/register", methods="POST")
+# takes user's name and phone number as username and user id
+def register ():
+        if request.method == "POST":
+                db_cursor.execute ("""INSERT INTO user_data(ID, USER, TRANSACTIONS_ID, ACCOUNTS_ID)
+                                        VALUES(""" + str(request.form("user_id")) + ", " + request.form("first_name")
+                                        + " " + request.form("last_name") + ", " + str(request.form("user_id")) + ", "
+                                        + str(request.form("user_id")) + ");")
+                db.commit ()
 
 app.run()
