@@ -11,7 +11,7 @@ app = Flask (__name__)
 db = sqlite3.connect("main.db")
 db_cursor = db.cursor()
 
-# sample user id, to dynamically fetch later
+# sample user id, to dynamically fetch at login
 user_id = 1
 
 # fetches username from database
@@ -88,18 +88,29 @@ def expense_info ():
 # conversion of above dictionaries into json, then sending as HTTP response
 @app.route  ("/")
 def main_page ():
-    return json.dumps (summary_info ())
+        return json.dumps (summary_info ())
 
 @app.route ("/balance")
 def balance ():
-    return json.dumps (balance_info ())
+        return json.dumps (balance_info ())
 
 @app.route ("/savings")
 def savings ():
-    return json.dumps (savings_info ())
+        return json.dumps (savings_info ())
 
 @app.route  ("/expenses")
 def expenses ():
-    return json.dumps (expense_info ())
+        return json.dumps (expense_info ())
+@app.route ("/login", methods="POST")
+def login ():
+        if request.method == "POST":
+                user_id = request.form("user_id")
+                try:
+                        db_cursor.execute ("SELECT USER FROM user_data WHERE ID = " + str(user_id))
+                        temp_name = db_cursor.fetchone()[0]
+                except:
+                        return json.dumps ({"ERROR": str(user_id) + " is invalid"})
+        else:
+                return json.dumps ({"User ID": user_id})
 
 app.run()
