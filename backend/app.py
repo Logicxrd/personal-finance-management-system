@@ -86,21 +86,40 @@ def expense_info ():
         }
 
 # conversion of above dictionaries into json, then sending as HTTP response
+# also transforming forms into database inserts
 @app.route  ("/")
 def main_page ():
         return json.dumps (summary_info ())
 
 @app.route ("/balance")
 def balance ():
-        return json.dumps (balance_info ())
+        if request.method == "POST":
+                db_cursor.execute ("""INSERT INTO transactions (ID, ACCOUNT, TRANSACTION_TYPE, TRANSACTION_DATE, AMOUNT)
+                                        VALUES (""" + str (user_id) + ', "' + request.form ('bank') + '", "DEPOSIT_CHECKING", ' + 
+                                        request.form ('date') + ', ' + str (request.form ('amount')) + ');')
+                db.commit ()
+        else:
+                return json.dumps (balance_info ())
 
-@app.route ("/savings")
+@app.route ("/savings", methods="POST")
 def savings ():
-        return json.dumps (savings_info ())
+        if request.method == "POST":
+                db_cursor.execute ("""INSERT INTO transactions (ID, ACCOUNT, TRANSACTION_TYPE, TRANSACTION_DATE, AMOUNT)
+                                        VALUES (""" + str (user_id) + ', "' + request.form ('bank') + '", "DEPOSIT_SAVINGS", ' + 
+                                        request.form ('date') + ', ' + str (request.form ('amount')) + ');')
+                db.commit ()
+        else:
+                return json.dumps (savings_info ())
 
-@app.route  ("/expenses")
+@app.route  ("/expenses", methods="POST")
 def expenses ():
-        return json.dumps (expense_info ())
+        if request.method == "POST":
+                db_cursor.execute ("""INSERT INTO transactions (ID, ACCOUNT, TRANSACTION_TYPE, TRANSACTION_DATE, AMOUNT)
+                                        VALUES (""" + str (user_id) + ', "' + request.form ('company') + '", "EXPENSE", ' + 
+                                        request.form ('date') + ', ' + str (request.form ('amount')) + ');')
+                db.commit ()
+        else:
+                return json.dumps (expense_info ())
 
 @app.route ("/login", methods="POST")
 # takes POST request for user_id and checks against database for validity
@@ -120,9 +139,9 @@ app.route ("/register", methods="POST")
 def register ():
         if request.method == "POST":
                 db_cursor.execute ("""INSERT INTO user_data (ID, USER, TRANSACTIONS_ID, ACCOUNTS_ID)
-                                        VALUES (""" + str (request.form ("user_id")) + ", " + request.form ("first_name")
-                                        + " " + request.form ("last_name") + ", " + str(request.form ("user_id")) + ", "
-                                        + str (request.form ("user_id")) + ");")
+                                        VALUES (""" + str (request.form ("user_id")) + ', "' + request.form ("first_name")
+                                        + ' ' + request.form ("last_name") + '", ' + str(request.form ("user_id")) + ', '
+                                        + str (request.form ("user_id")) + ');')
                 db.commit ()
 
 app.run()
