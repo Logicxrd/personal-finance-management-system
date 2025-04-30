@@ -101,7 +101,7 @@ def balance ():
         else:
                 return json.dumps (balance_info ())
 
-@app.route ("/savings", methods="POST")
+@app.route ("/savings", methods=["POST", "GET"])
 def savings ():
         if request.method == "POST":
                 db_cursor.execute ("""INSERT INTO transactions (ID, ACCOUNT, TRANSACTION_TYPE, TRANSACTION_DATE, AMOUNT)
