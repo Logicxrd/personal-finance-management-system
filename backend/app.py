@@ -91,7 +91,7 @@ def expense_info ():
 def main_page ():
         return json.dumps (summary_info ())
 
-@app.route ("/balance")
+@app.route ("/balance", methods=["POST", "GET"])
 def balance ():
         if request.method == "POST":
                 db_cursor.execute ("""INSERT INTO transactions (ID, ACCOUNT, TRANSACTION_TYPE, TRANSACTION_DATE, AMOUNT)
@@ -111,7 +111,7 @@ def savings ():
         else:
                 return json.dumps (savings_info ())
 
-@app.route  ("/expenses", methods="POST")
+@app.route  ("/expenses", methods=["POST", "GET"])
 def expenses ():
         if request.method == "POST":
                 db_cursor.execute ("""INSERT INTO transactions (ID, ACCOUNT, TRANSACTION_TYPE, TRANSACTION_DATE, AMOUNT)
@@ -121,7 +121,7 @@ def expenses ():
         else:
                 return json.dumps (expense_info ())
 
-@app.route ("/login", methods="POST")
+@app.route ("/login", methods=["POST"])
 # takes POST request for user_id and checks against database for validity
 def login ():
         if request.method == "POST":
@@ -134,7 +134,7 @@ def login ():
         else:
                 return json.dumps ({"User ID": user_id})
 
-app.route ("/register", methods="POST")
+app.route ("/register", methods=["POST"])
 # takes user's name and phone number as username and user id
 def register ():
         if request.method == "POST":
