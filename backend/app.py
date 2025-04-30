@@ -86,6 +86,7 @@ def expense_info ():
         }
 
 # conversion of above dictionaries into json, then sending as HTTP response
+
 # also transforming forms into database inserts
 @app.route  ("/")
 def main_page ():
@@ -143,5 +144,6 @@ def register ():
                                         + ' ' + request.form ("last_name") + '", ' + str(request.form ("user_id")) + ', '
                                         + str (request.form ("user_id")) + ');')
                 db.commit ()
+
 
 app.run()

@@ -7,9 +7,10 @@ import {
 } from "react-router-dom";
 import Loading from "./pages/Loading";
 import Login from "./pages/Login";
-import Register from "./pages/Register"; // Import the new Register component
+import Register from "./pages/Register";
 import Dashboard from "./pages/Dashboard";
 import Expenses from "./pages/Expenses";
+import PersonalInfo from "./pages/PersonalInfo";
 import "./App.css";
 
 // Simple auth check function
@@ -26,8 +27,6 @@ const ProtectedRoute = ({ children }) => {
 };
 
 function App() {
-  console.log("App is rendering"); // Debug line
-
   return (
     <Router>
       <div className="App">
@@ -35,9 +34,9 @@ function App() {
           {/* Default route should redirect to loading */}
           <Route exact path="/loading" element={<Loading />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />{" "}
-          <Route path="/expenses" element={<Expenses />} />{" "}
-          {/* Add new register route */}
+          <Route path="/register" element={<Register />} />
+
+          {/* Protected routes - require authentication */}
           <Route
             path="/dashboard"
             element={
@@ -46,6 +45,23 @@ function App() {
               </ProtectedRoute>
             }
           />
+          <Route
+            path="/expenses"
+            element={
+              <ProtectedRoute>
+                <Expenses />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/personal-info"
+            element={
+              <ProtectedRoute>
+                <PersonalInfo />
+              </ProtectedRoute>
+            }
+          />
+
           {/* Redirect any unknown routes to loading page */}
           <Route path="*" element={<Navigate to="/loading" replace />} />
         </Routes>

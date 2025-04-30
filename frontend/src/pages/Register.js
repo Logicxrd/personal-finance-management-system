@@ -67,6 +67,21 @@ const Register = () => {
     setIsLoading(true);
 
     try {
+      // Check if user already exists
+      const allUsers = localStorage.getItem("allUsers");
+      if (allUsers) {
+        const parsedUsers = JSON.parse(allUsers);
+        const existingUser = parsedUsers.find(
+          (user) => user.phoneNumber.replace(/\D/g, "") === numbersOnly
+        );
+
+        if (existingUser) {
+          setError("An account with this phone number already exists");
+          setIsLoading(false);
+          return;
+        }
+      }
+
       // Mock API call - replace with actual API when backend is ready
       await new Promise((resolve) => setTimeout(resolve, 1000));
 
@@ -96,8 +111,39 @@ const Register = () => {
       // Mock API call - replace with actual API when backend is ready
       await new Promise((resolve) => setTimeout(resolve, 1000));
 
-      // Mock successful registration and login
+      // Create user object
+      const userData = {
+        firstName,
+        lastName,
+        phoneNumber,
+        email: "", // Initial empty email, can be updated later
+        createdAt: new Date().toISOString(),
+      };
+
+      // Save user data to localStorage
+      // First, get existing users or create empty array
+      const existingUsers = localStorage.getItem("allUsers");
+      let allUsers = [];
+
+      if (existingUsers) {
+        allUsers = JSON.parse(existingUsers);
+      }
+
+      // Add new user
+      allUsers.push(userData);
+
+      // Save back to localStorage
+      localStorage.setItem("allUsers", JSON.stringify(allUsers));
+
+      // Set current user info
+      localStorage.setItem("userInfo", JSON.stringify(userData));
+
+      // Set authentication status
       localStorage.setItem("isAuthenticated", "true");
+
+      // BACKEND INTEGRATION NOTE:
+      // Here you would make an API call to create the user in your database
+      // Example: await api.createUser({ firstName, lastName, phoneNumber });
 
       // Navigate to Dashboard
       navigate("/dashboard");

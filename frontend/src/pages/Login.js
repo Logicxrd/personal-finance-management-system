@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import "../styles/Login.css";
 import humcashLogo from "../assets/humcash-logo.png";
@@ -11,6 +11,14 @@ const Login = () => {
   const [error, setError] = useState("");
 
   const navigate = useNavigate();
+
+  // Check if user is already authenticated
+  useEffect(() => {
+    const isAuthenticated = localStorage.getItem("isAuthenticated");
+    if (isAuthenticated === "true") {
+      navigate("/dashboard");
+    }
+  }, [navigate]);
 
   // Format phone number as user types (XXX) XXX-XXXX
   const handlePhoneChange = (e) => {
@@ -54,14 +62,43 @@ const Login = () => {
     setIsLoading(true);
 
     try {
-      // Mock API call - replace with actual API when backend is ready
-      await new Promise((resolve) => setTimeout(resolve, 1000));
+      // Check if this phone number exists in our "database" (localStorage)
+      const allUsers = localStorage.getItem("allUsers");
+      let userExists = false;
+      let userData = null;
 
-      // Move to verification step
+      if (allUsers) {
+        const parsedUsers = JSON.parse(allUsers);
+        // Find user with this phone number
+        userData = parsedUsers.find(
+          (user) => user.phoneNumber.replace(/\D/g, "") === numbersOnly
+        );
+
+        if (userData) {
+          userExists = true;
+        }
+      }
+
+      if (!userExists) {
+        setError(
+          "No account found with this phone number. Please create an account."
+        );
+        setIsLoading(false);
+        return;
+      }
+
+      // Move to verification step if user exists
       setStep("verification");
       setError("");
+
+      // BACKEND INTEGRATION NOTE:
+      // In a real app with backend integration, you would make an API call here to:
+      // 1. Verify the phone number exists in the database
+      // 2. Send a verification code to that phone number
+      // Example: await api.sendVerificationCode(phoneNumber);
     } catch (err) {
       setError("Could not send verification code. Please try again.");
+      console.error("Login error:", err);
     } finally {
       setIsLoading(false);
     }
@@ -80,16 +117,47 @@ const Login = () => {
     setIsLoading(true);
 
     try {
-      // Mock API call - replace with actual API when backend is ready
+      // Mock API call - simulate verification time
       await new Promise((resolve) => setTimeout(resolve, 1000));
 
-      // Mock successful login - this will be replaced with actual auth logic
-      localStorage.setItem("isAuthenticated", "true");
+      // BACKEND INTEGRATION NOTE:
+      // In a real app with backend integration, you would make an API call here to:
+      // 1. Verify the code matches what was sent to the user's phone
+      // 2. Create an authentication token or session
+      // Example: const authResult = await api.verifyCode(phoneNumber, verificationCode);
 
-      // Navigate to Dashboard
-      navigate("/dashboard");
+      // Get user data from localStorage
+      const allUsers = localStorage.getItem("allUsers");
+      if (allUsers) {
+        const parsedUsers = JSON.parse(allUsers);
+        const numbersOnly = phoneNumber.replace(/\D/g, "");
+
+        // Find user with this phone number
+        const userData = parsedUsers.find(
+          (user) => user.phoneNumber.replace(/\D/g, "") === numbersOnly
+        );
+
+        if (userData) {
+          // For testing purposes - any 6-digit code is accepted
+          // In production, this would actually validate the code
+
+          // Set auth status and user info
+          localStorage.setItem("isAuthenticated", "true");
+          localStorage.setItem("userInfo", JSON.stringify(userData));
+
+          // Navigate to Dashboard
+          navigate("/dashboard");
+          return;
+        }
+      }
+
+      // If we reached here, something went wrong
+      throw new Error("User not found");
     } catch (err) {
-      setError("Invalid verification code. Please try again.");
+      setError(
+        "Invalid verification code or user not found. Please try again."
+      );
+      console.error("Verification error:", err);
     } finally {
       setIsLoading(false);
     }
@@ -117,7 +185,7 @@ const Login = () => {
                 type="text"
                 value={phoneNumber}
                 onChange={handlePhoneChange}
-                placeholder="(123)456-7890"
+                placeholder="(123) 456-7890"
                 required
               />
             </div>
@@ -148,7 +216,7 @@ const Login = () => {
           </form>
         ) : (
           <form onSubmit={verifyCode}>
-            <h2 className="Login-title">Verify your Identity</h2>
+            <h2 className="login-title">Verify your Identity</h2>
             <div className="input-group">
               <input
                 type="text"
@@ -174,7 +242,7 @@ const Login = () => {
 
             <button
               type="button"
-              className="secondary-button" //changed from text-button
+              className="secondary-button"
               onClick={handleBack}
               disabled={isLoading}
             >
