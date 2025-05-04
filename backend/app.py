@@ -115,9 +115,9 @@ def savings ():
 @app.route  ("/expenses", methods=["POST", "GET"])
 def expenses ():
         if request.method == "POST":
-                db_cursor.execute ("""INSERT INTO transactions (ID, ACCOUNT, TRANSACTION_TYPE, TRANSACTION_DATE, AMOUNT)
-                                        VALUES (""" + str (user_id) + ', "' + request.form ('company') + '", "EXPENSE", ' + 
-                                        request.form ('date') + ', ' + str (request.form ('amount')) + ');')
+                db_cursor.execute ("""INSERT INTO transactions (ID, ACCOUNT, TRANSACTION_TYPE, TRANSACTION_CATEGORY, TRANSACTION_DATE, AMOUNT)
+                                        VALUES (""" + str (user_id) + ', "' + request.form ('company') + '", "' + request.form ('category') 
+                                        + '", "EXPENSE", ' + request.form ('date') + ', ' + str (request.form ('amount')) + ');')
                 db.commit ()
         else:
                 return json.dumps (expense_info ())
