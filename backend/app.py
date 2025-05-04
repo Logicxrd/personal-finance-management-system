@@ -3,12 +3,13 @@
 #       json for converting dictionaries to json
 #       sqlite3 for SQLite database connection
 from flask import Flask
+from flask import request
 import json
 import sqlite3
 
 # app, database, and database cursor declaration
 app = Flask (__name__)
-db = sqlite3.connect ("main.db")
+db = sqlite3.connect ("main.db", check_same_thread=False)
 db_cursor = db.cursor ()
 
 # sample user id, to dynamically fetch at login
@@ -96,8 +97,8 @@ def main_page ():
 def balance ():
         if request.method == "POST":
                 db_cursor.execute ("""INSERT INTO transactions (ID, ACCOUNT, TRANSACTION_TYPE, TRANSACTION_DATE, AMOUNT)
-                                        VALUES (""" + str (user_id) + ', "' + request.form ('bank') + '", "DEPOSIT_CHECKING", ' + 
-                                        request.form ('date') + ', ' + str (request.form ('amount')) + ');')
+                                        VALUES (""" + str (user_id) + ', "' + request.form ['bank'] + '", "DEPOSIT_CHECKING", ' + 
+                                        request.form ['date'] + ', ' + str (request.form ['amount']) + ');')
                 db.commit ()
         else:
                 return json.dumps (balance_info ())
@@ -106,8 +107,8 @@ def balance ():
 def savings ():
         if request.method == "POST":
                 db_cursor.execute ("""INSERT INTO transactions (ID, ACCOUNT, TRANSACTION_TYPE, TRANSACTION_DATE, AMOUNT)
-                                        VALUES (""" + str (user_id) + ', "' + request.form ('bank') + '", "DEPOSIT_SAVINGS", ' + 
-                                        request.form ('date') + ', ' + str (request.form ('amount')) + ');')
+                                        VALUES (""" + str (user_id) + ', "' + request.form ['bank'] + '", "DEPOSIT_SAVINGS", ' + 
+                                        request.form ['date'] + ', ' + str (request.form ['amount']) + ');')
                 db.commit ()
         else:
                 return json.dumps (savings_info ())
@@ -116,8 +117,8 @@ def savings ():
 def expenses ():
         if request.method == "POST":
                 db_cursor.execute ("""INSERT INTO transactions (ID, ACCOUNT, TRANSACTION_TYPE, TRANSACTION_CATEGORY, TRANSACTION_DATE, AMOUNT)
-                                        VALUES (""" + str (user_id) + ', "' + request.form ('company') + '", "' + request.form ('category') 
-                                        + '", "EXPENSE", ' + request.form ('date') + ', ' + str (request.form ('amount')) + ');')
+                                        VALUES (""" + str (user_id) + ', "' + request.form ['company'] + '", "' + request.form ['category' ]
+                                        + '", "EXPENSE", ' + request.form ['date'] + ', ' + str (request.form ['amount']) + ');')
                 db.commit ()
         else:
                 return json.dumps (expense_info ())
@@ -126,24 +127,27 @@ def expenses ():
 # takes POST request for user_id and checks against database for validity
 def login ():
         if request.method == "POST":
-                user_id = request.form ("user_id")
+                global user_id
+                user_id = request.form ["user_id"]
                 try:
                         db_cursor.execute ("SELECT USER FROM user_data WHERE ID = " + str (user_id))
                         temp_name = db_cursor.fetchone()[0]
+                        return "OK"
                 except:
                         return json.dumps ({"ERROR": str (user_id) + " is invalid"})
         else:
                 return json.dumps ({"User ID": user_id})
 
-app.route ("/register", methods=["POST"])
+@app.route ("/register", methods=["POST"])
 # takes user's name and phone number as username and user id
 def register ():
         if request.method == "POST":
+                full_name = request.form ["first_name"] + " " + request.form ["last_name"]
                 db_cursor.execute ("""INSERT INTO user_data (ID, USER, TRANSACTIONS_ID, ACCOUNTS_ID)
-                                        VALUES (""" + str (request.form ("user_id")) + ', "' + request.form ("first_name")
-                                        + ' ' + request.form ("last_name") + '", ' + str(request.form ("user_id")) + ', '
-                                        + str (request.form ("user_id")) + ');')
+                                        VALUES (""" + str (request.form ["user_id"]) + ', "' + full_name + '", '
+                                        + str(request.form ["user_id"]) + ', ' + str (request.form ["user_id"]) + ');')
                 db.commit ()
+                return "OK"
 
 
 app.run()
