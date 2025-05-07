@@ -401,9 +401,9 @@
 
 /* Footer Navigation Styles - UPDATED */
 .app-footer {
-  background-color: #f0f0fc;
-  border-top: 1px solid #eee;
-  padding: 12px 0;
+  background-image: url("../assets/background1.jpg");
+  background-size: cover;
+  background-position: center;
 }
 
 .footer-nav {

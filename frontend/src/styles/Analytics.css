@@ -1,0 +1,235 @@
+/* Analytics.css */
+/* Extend the existing Dashboard.css styles */
+
+.analytics-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.analytics-header h2 {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.view-toggle {
+  display: flex;
+  border-radius: 20px;
+  padding: 4px;
+  overflow: hidden;
+}
+
+.view-toggle button {
+  border: none;
+  background-color: #d8d8ff;
+  color: #333;
+  padding: 8px 16px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.view-toggle button.active {
+  background-color: #333;
+  color: #fff;
+  font-weight: 600;
+}
+
+.analytics-card {
+  background-color: white;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  margin-bottom: 20px;
+  position: relative;
+}
+
+.chart-header {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.chart-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: #333;
+}
+
+.chart-details {
+  display: flex;
+  justify-content: space-between;
+}
+
+.month-info {
+  display: flex;
+  gap: 30px;
+}
+
+.current-month,
+.last-month {
+  display: flex;
+  flex-direction: column;
+}
+
+.label {
+  font-size: 16px;
+  color: #555;
+  margin-bottom: 4px;
+}
+
+.value {
+  font-size: 22px;
+  font-weight: 700;
+  color: #333;
+}
+
+.change-percentage {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.chart-container-pie {
+  height: 300px;
+  position: relative;
+}
+
+.no-data {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: #999;
+}
+
+.add-expense-link {
+  margin-top: 10px;
+  background-color: #d8d8ff;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 16px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.add-expense-link:hover {
+  background-color: #c2c2fe;
+  transform: translateY(-2px);
+}
+
+/* ADDED: Improved chart center text styles */
+.chart-center-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  pointer-events: none;
+  z-index: 10;
+}
+
+.total-label {
+  font-size: 14px;
+  color: #666;
+}
+
+.total-value {
+  font-size: 24px;
+  font-weight: 700;
+  color: #333;
+}
+
+.custom-tooltip {
+  background-color: #fff;
+  border: 1px solid #eee;
+  border-radius: 8px;
+  padding: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.custom-tooltip .category {
+  font-weight: 600;
+  margin: 0 0 4px;
+}
+
+.custom-tooltip .amount {
+  font-size: 18px;
+  margin: 0 0 4px;
+}
+
+.custom-tooltip .percent {
+  color: #666;
+  margin: 0;
+}
+
+.show-more-button {
+  text-align: center;
+  padding: 10px;
+  color: #6e6ee5;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.show-more-button:hover {
+  text-decoration: underline;
+}
+
+.expenses-preview {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.expenses-preview h3 {
+  font-size: 16px;
+  margin: 0;
+}
+
+.view-all-button {
+  background: none;
+  border: none;
+  color: #6e6ee5;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  padding: 0;
+}
+
+.view-all-button:hover {
+  text-decoration: underline;
+}
+
+/* Responsive adjustments */
+@media (max-width: 600px) {
+  .month-info {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .chart-details {
+    flex-direction: column;
+  }
+
+  .value {
+    font-size: 18px;
+  }
+
+  .analytics-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .view-toggle {
+    align-self: center;
+  }
+}

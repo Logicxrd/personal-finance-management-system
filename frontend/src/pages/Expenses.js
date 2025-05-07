@@ -1,7 +1,17 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
+import {
+  PieChart,
+  Pie,
+  Cell,
+  ResponsiveContainer,
+  Legend,
+  Tooltip,
+} from "recharts";
 import "../styles/Expenses.css";
 import humcashLogo from "../assets/humcash-logo.png";
+import { generateAllAlerts, saveAlerts } from "../utils/AlertsUtil";
+import AlertsNotification from "../components/AlertsNotification";
 
 const Expenses = () => {
   const navigate = useNavigate();
@@ -12,6 +22,39 @@ const Expenses = () => {
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [currentExpense, setCurrentExpense] = useState(null);
+  const [viewMode, setViewMode] = useState("month"); // "month" or "category"
+  const [currentMonthTotal, setCurrentMonthTotal] = useState(0);
+  const [lastMonthTotal, setLastMonthTotal] = useState(0);
+  const [percentageChange, setPercentageChange] = useState(0);
+  const [categoryData, setCategoryData] = useState([]);
+
+  // Colors for the pie chart segments
+  const COLORS = [
+    "#0088FE",
+    "#FF8042",
+    "#8884D8",
+    "#FFBB28",
+    "#00C49F",
+    "#FF6666",
+    "#36A2EB",
+    "#FF9F40",
+  ];
+
+  // Function to generate and save alerts - NEW FUNCTION
+  const generateAndSaveAlerts = () => {
+    // Load data from localStorage
+    const expenses = JSON.parse(localStorage.getItem("expenses") || "[]");
+    const budgets = JSON.parse(localStorage.getItem("budgets") || "[]");
+    const savingsGoals = JSON.parse(
+      localStorage.getItem("savingsGoals") || "[]"
+    );
+
+    // Generate alerts
+    const newAlerts = generateAllAlerts(expenses, budgets, savingsGoals);
+
+    // Save alerts
+    saveAlerts(newAlerts);
+  };
 
   // Load expenses from local storage
   const loadExpenses = () => {
@@ -20,6 +63,7 @@ const Expenses = () => {
       try {
         const parsedExpenses = JSON.parse(savedExpenses);
         setExpenses(parsedExpenses);
+        processExpenseData(parsedExpenses);
       } catch (error) {
         console.error("Error parsing expenses:", error);
         setExpenses([]);
@@ -27,6 +71,74 @@ const Expenses = () => {
     } else {
       setExpenses([]); // No expenses found
     }
+  };
+
+  // Process expense data for visualization
+  const processExpenseData = (expenses) => {
+    // Get current and last month
+    const now = new Date();
+    const currentMonth = now.getMonth();
+    const currentYear = now.getFullYear();
+    const lastMonth = currentMonth === 0 ? 11 : currentMonth - 1;
+    const lastMonthYear = currentMonth === 0 ? currentYear - 1 : currentYear;
+
+    // Filter expenses for current and last month
+    const currentMonthExpenses = expenses.filter((expense) => {
+      const expenseDate = new Date(expense.date);
+      return (
+        expenseDate.getMonth() === currentMonth &&
+        expenseDate.getFullYear() === currentYear
+      );
+    });
+
+    const lastMonthExpenses = expenses.filter((expense) => {
+      const expenseDate = new Date(expense.date);
+      return (
+        expenseDate.getMonth() === lastMonth &&
+        expenseDate.getFullYear() === lastMonthYear
+      );
+    });
+
+    // Calculate totals
+    const currentTotal = currentMonthExpenses.reduce(
+      (sum, expense) => sum + (parseFloat(expense.amount) || 0),
+      0
+    );
+    const lastTotal = lastMonthExpenses.reduce(
+      (sum, expense) => sum + (parseFloat(expense.amount) || 0),
+      0
+    );
+
+    setCurrentMonthTotal(currentTotal);
+    setLastMonthTotal(lastTotal);
+
+    // Calculate percentage change
+    if (lastTotal > 0) {
+      const change = ((currentTotal - lastTotal) / lastTotal) * 100;
+      setPercentageChange(change);
+    } else {
+      setPercentageChange(currentTotal > 0 ? 100 : 0);
+    }
+
+    // Group expenses by category for the current month
+    const categorySums = {};
+    currentMonthExpenses.forEach((expense) => {
+      if (expense.category) {
+        if (categorySums[expense.category]) {
+          categorySums[expense.category] += parseFloat(expense.amount) || 0;
+        } else {
+          categorySums[expense.category] = parseFloat(expense.amount) || 0;
+        }
+      }
+    });
+
+    // Convert to array for the pie chart
+    const categoryDataArray = Object.keys(categorySums).map((category) => ({
+      name: category,
+      value: categorySums[category],
+    }));
+
+    setCategoryData(categoryDataArray);
   };
 
   // Load expenses on component mount AND whenever the pathname changes
@@ -45,25 +157,173 @@ const Expenses = () => {
     }
   }, [expenses]);
 
+  // New function to handle deducting expenses from savings
+  const deductFromSavingsIfNeeded = (expense) => {
+    // Load current savings data
+    const savedTotalSavings = localStorage.getItem("totalSavings");
+    if (!savedTotalSavings) return;
+
+    // Get the total savings amount
+    const totalSavings = JSON.parse(savedTotalSavings);
+
+    // Check if savings history exists
+    const savedHistory = localStorage.getItem("savingsHistory");
+    if (!savedHistory) return;
+
+    // Parse savings history to find latest contribution
+    const savingsHistory = JSON.parse(savedHistory);
+    if (savingsHistory.length === 0) return;
+
+    // Sort savings history by date (newest first)
+    savingsHistory.sort((a, b) => new Date(b.date) - new Date(a.date));
+
+    // Get the date of the latest savings contribution
+    const latestContributionMonth = savingsHistory[0].date; // Format: YYYY-MM
+    const latestContributionDate = new Date(`${latestContributionMonth}-01`);
+
+    // Get the expense date
+    const expenseDate = new Date(expense.date);
+
+    // If the expense is in the same month or after the latest contribution, deduct it from savings
+    if (expenseDate >= latestContributionDate) {
+      const newTotalSavings = Math.max(0, totalSavings - expense.amount);
+      localStorage.setItem("totalSavings", JSON.stringify(newTotalSavings));
+
+      // Update the savings history for the current month
+      const expenseMonth = expense.date.substring(0, 7); // Format: YYYY-MM
+      const updatedHistory = savingsHistory.map((entry) => {
+        if (entry.date === expenseMonth) {
+          return {
+            ...entry,
+            amount: Math.max(0, entry.amount - expense.amount),
+          };
+        }
+        return entry;
+      });
+
+      localStorage.setItem("savingsHistory", JSON.stringify(updatedHistory));
+    }
+  };
+
+  // New function to add back to savings when expense is deleted
+  const addBackToSavingsIfNeeded = (expense) => {
+    if (!expense) return;
+
+    // Load current savings data
+    const savedTotalSavings = localStorage.getItem("totalSavings");
+    if (!savedTotalSavings) return;
+
+    // Get the total savings amount
+    const totalSavings = JSON.parse(savedTotalSavings);
+
+    // Check if savings history exists
+    const savedHistory = localStorage.getItem("savingsHistory");
+    if (!savedHistory) return;
+
+    // Parse savings history
+    const savingsHistory = JSON.parse(savedHistory);
+    if (savingsHistory.length === 0) return;
+
+    // Sort savings history by date (newest first)
+    savingsHistory.sort((a, b) => new Date(b.date) - new Date(a.date));
+
+    // Get the date of the latest savings contribution
+    const latestContributionMonth = savingsHistory[0].date; // Format: YYYY-MM
+    const latestContributionDate = new Date(`${latestContributionMonth}-01`);
+
+    // Get the expense date
+    const expenseDate = new Date(expense.date);
+
+    // If the expense was in the same month or after the latest contribution, add it back to savings
+    if (expenseDate >= latestContributionDate) {
+      const newTotalSavings = totalSavings + expense.amount;
+      localStorage.setItem("totalSavings", JSON.stringify(newTotalSavings));
+
+      // Update the savings history for the expense's month
+      const expenseMonth = expense.date.substring(0, 7); // Format: YYYY-MM
+      const updatedHistory = savingsHistory.map((entry) => {
+        if (entry.date === expenseMonth) {
+          return {
+            ...entry,
+            amount: entry.amount + expense.amount,
+          };
+        }
+        return entry;
+      });
+
+      localStorage.setItem("savingsHistory", JSON.stringify(updatedHistory));
+    }
+  };
+
+  // MODIFIED: Generate alerts after adding expense
   const handleAddExpense = (newExpense) => {
     const updatedExpenses = [...expenses, { ...newExpense, id: Date.now() }];
     setExpenses(updatedExpenses);
     setIsAddModalOpen(false);
+
+    // Update localStorage
+    localStorage.setItem("expenses", JSON.stringify(updatedExpenses));
+
+    // New functionality: Deduct from savings if expense is on or after latest savings contribution
+    deductFromSavingsIfNeeded(newExpense);
+
+    // NEW: Generate and save alerts
+    generateAndSaveAlerts();
   };
 
+  // MODIFIED: Generate alerts after editing expense
   const handleEditExpense = (updatedExpense) => {
+    // Find the original expense
+    const originalExpense = expenses.find(
+      (expense) => expense.id === updatedExpense.id
+    );
+
+    // Update expenses
     const updatedExpenses = expenses.map((expense) =>
       expense.id === updatedExpense.id ? updatedExpense : expense
     );
+
     setExpenses(updatedExpenses);
     setIsEditModalOpen(false);
     setCurrentExpense(null);
+
+    // If amount changed, adjust savings
+    if (originalExpense && originalExpense.amount !== updatedExpense.amount) {
+      // If expense decreased, add the difference back to savings
+      if (originalExpense.amount > updatedExpense.amount) {
+        const difference = originalExpense.amount - updatedExpense.amount;
+        const tempExpense = { ...originalExpense, amount: difference };
+        addBackToSavingsIfNeeded(tempExpense);
+      }
+      // If expense increased, deduct the difference from savings
+      else if (originalExpense.amount < updatedExpense.amount) {
+        const difference = updatedExpense.amount - originalExpense.amount;
+        const tempExpense = { ...updatedExpense, amount: difference };
+        deductFromSavingsIfNeeded(tempExpense);
+      }
+    }
+
+    // NEW: Generate and save alerts
+    generateAndSaveAlerts();
   };
 
+  // MODIFIED: Generate alerts after deleting expense
   const handleDeleteExpense = (id) => {
-    console.log("Deleting Expense ID:", id); // Log the ID here
+    // Find the expense before deleting it
+    const expenseToDelete = expenses.find((expense) => expense.id === id);
+
+    // Delete the expense
     const updatedExpenses = expenses.filter((expense) => expense.id !== id);
     setExpenses(updatedExpenses);
+
+    // Update localStorage
+    localStorage.setItem("expenses", JSON.stringify(updatedExpenses));
+
+    // Add back to savings if the expense was deducted
+    addBackToSavingsIfNeeded(expenseToDelete);
+
+    // NEW: Generate and save alerts
+    generateAndSaveAlerts();
   };
 
   const openEditModal = (expense) => {
@@ -90,6 +350,34 @@ const Expenses = () => {
     } else if (tab === "Analytics") {
       navigate("/analytics");
     }
+  };
+
+  // Format the currency value
+  const formatCurrency = (value) => {
+    return value
+      .toLocaleString("en-US", {
+        style: "currency",
+        currency: "USD",
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2,
+      })
+      .replace(/\.00$/, "");
+  };
+
+  // Custom tooltip for the pie chart
+  const CustomTooltip = ({ active, payload }) => {
+    if (active && payload && payload.length) {
+      return (
+        <div className="custom-tooltip">
+          <p className="category">{payload[0].name}</p>
+          <p className="amount">${payload[0].value.toFixed(2)}</p>
+          <p className="percent">
+            {((payload[0].value / currentMonthTotal) * 100).toFixed(1)}%
+          </p>
+        </div>
+      );
+    }
+    return null;
   };
 
   return (
@@ -171,17 +459,111 @@ const Expenses = () => {
           <img src={humcashLogo} alt="HumCash Logo" className="header-logo" />
           <h1 className="app-title">ℍ𝕌𝕄ℂ𝔸𝕊ℍ</h1>
         </div>
+        {/* Added AlertsNotification component here */}
+        <AlertsNotification />
       </header>
 
       <div className="dashboard-content">
+        {/* Expense Analytics Card */}
+        <div className="analytics-card">
+          <div className="chart-header">
+            <div className="chart-title">Expense Structure</div>
+            <div className="chart-details">
+              <div className="month-info">
+                <div className="current-month">
+                  <span className="label">This Month</span>
+                  <span className="value">
+                    {formatCurrency(currentMonthTotal)}
+                  </span>
+                </div>
+                <div className="last-month">
+                  <span className="label">Last Month</span>
+                  <span
+                    className="value change-percentage"
+                    style={{
+                      color: percentageChange >= 0 ? "#ff6b6b" : "#4ecdc4",
+                    }}
+                  >
+                    {percentageChange >= 0 ? "+" : ""}
+                    {percentageChange.toFixed(1)}%
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="chart-container-pie">
+            {categoryData.length > 0 ? (
+              <ResponsiveContainer width="100%" height={300}>
+                <PieChart>
+                  <Pie
+                    data={categoryData}
+                    cx="50%"
+                    cy="50%"
+                    labelLine={false}
+                    outerRadius={100}
+                    innerRadius={60}
+                    fill="#8884d8"
+                    dataKey="value"
+                    paddingAngle={2}
+                  >
+                    {categoryData.map((entry, index) => (
+                      <Cell
+                        key={`cell-${index}`}
+                        fill={COLORS[index % COLORS.length]}
+                      />
+                    ))}
+                  </Pie>
+                  <Tooltip content={<CustomTooltip />} />
+                  <Legend
+                    layout="vertical"
+                    align="right"
+                    verticalAlign="middle"
+                  />
+                </PieChart>
+              </ResponsiveContainer>
+            ) : (
+              <div className="empty-state-container">
+                <div className="empty-state-message">
+                  <p>No expense data available for this period</p>
+                </div>
+                <div className="add-expense-button-container">
+                  <button
+                    className="add-expense-link"
+                    onClick={() => setIsAddModalOpen(true)}
+                  >
+                    Add your first expense
+                  </button>
+                </div>
+              </div>
+            )}
+          </div>
+
+          <div
+            className="show-more-button"
+            onClick={() => navigate("/analytics")}
+          >
+            SHOW MORE
+          </div>
+        </div>
+
+        {/* MODIFIED: Expenses Header with Manage Budgets button */}
         <div className="expenses-header">
           <h2>My Expenses</h2>
-          <button
-            className="add-expense-button"
-            onClick={() => setIsAddModalOpen(true)}
-          >
-            + Add Expense
-          </button>
+          <div className="expenses-actions">
+            <button
+              className="manage-budgets-button"
+              onClick={() => navigate("/budgets")}
+            >
+              Manage Budgets
+            </button>
+            <button
+              className="add-expense-button"
+              onClick={() => setIsAddModalOpen(true)}
+            >
+              + Add Expense
+            </button>
+          </div>
         </div>
 
         <div className="expenses-list-container">
@@ -203,7 +585,7 @@ const Expenses = () => {
                     <p className="expense-date">{expense.date}</p>
                   </div>
                   <div className="expense-amount">
-                    ${expense.amount.toFixed(2)}
+                    ${parseFloat(expense.amount).toFixed(2)}
                   </div>
                   <div className="expense-actions">
                     <button onClick={() => openEditModal(expense)}>Edit</button>

@@ -1,7 +1,9 @@
+// Dashboard.js - Modified to include AlertsNotification
 import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import "../styles/Dashboard.css";
 import humcashLogo from "../assets/humcash-logo.png";
+import AlertsNotification from "../components/AlertsNotification"; // Added import
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -61,23 +63,165 @@ const Dashboard = () => {
     // navigate(path); // Uncomment when routes are set up
   };
 
-  // Mock data for the dashboard
-  const financialData = {
-    netWorth: 45678.9,
-    netWorthGrowth: "+20%",
-    currentBalance: 2405,
-    currentBalanceGrowth: "+33%",
-    chartData: [
-      { date: "Jan 23", value: 27500 },
-      { date: "24", value: 28000 },
-      { date: "25", value: 31000 },
-      { date: "26", value: 32000 },
-      { date: "27", value: 34000 },
-      { date: "28", value: 39000 },
-      { date: "29", value: 36000 },
-      { date: "30", value: 48000 },
-    ],
+  // Function to calculate the current month's expenses total
+  const calculateCurrentMonthExpenses = () => {
+    const savedExpenses = localStorage.getItem("expenses");
+    if (!savedExpenses) return 0;
+
+    try {
+      const expenses = JSON.parse(savedExpenses);
+      const now = new Date();
+      const currentMonth = now.getMonth();
+      const currentYear = now.getFullYear();
+
+      // Filter expenses for current month
+      const currentMonthExpenses = expenses.filter((expense) => {
+        const expenseDate = new Date(expense.date);
+        return (
+          expenseDate.getMonth() === currentMonth &&
+          expenseDate.getFullYear() === currentYear
+        );
+      });
+
+      // Sum the expenses
+      return currentMonthExpenses.reduce(
+        (sum, expense) => sum + (parseFloat(expense.amount) || 0),
+        0
+      );
+    } catch (error) {
+      console.error("Error calculating current month expenses:", error);
+      return 0;
+    }
   };
+
+  // Function to calculate the last month's expenses total
+  const calculateLastMonthExpenses = () => {
+    const savedExpenses = localStorage.getItem("expenses");
+    if (!savedExpenses) return 0;
+
+    try {
+      const expenses = JSON.parse(savedExpenses);
+      const now = new Date();
+      const lastMonth = now.getMonth() - 1 < 0 ? 11 : now.getMonth() - 1;
+      const lastMonthYear =
+        now.getMonth() === 0 ? now.getFullYear() - 1 : now.getFullYear();
+
+      // Filter expenses for last month
+      const lastMonthExpenses = expenses.filter((expense) => {
+        const expenseDate = new Date(expense.date);
+        return (
+          expenseDate.getMonth() === lastMonth &&
+          expenseDate.getFullYear() === lastMonthYear
+        );
+      });
+
+      // Sum the expenses
+      return lastMonthExpenses.reduce(
+        (sum, expense) => sum + (parseFloat(expense.amount) || 0),
+        0
+      );
+    } catch (error) {
+      console.error("Error calculating last month expenses:", error);
+      return 0;
+    }
+  };
+
+  // Function to get the total savings amount
+  const getTotalSavings = () => {
+    const savedTotalSavings = localStorage.getItem("totalSavings");
+    if (!savedTotalSavings) return 0;
+
+    try {
+      return JSON.parse(savedTotalSavings) || 0;
+    } catch (error) {
+      console.error("Error parsing total savings:", error);
+      return 0;
+    }
+  };
+
+  // Function to calculate the percentage change between two values
+  const calculatePercentageChange = (current, previous) => {
+    if (previous === 0) return current > 0 ? 100 : 0;
+    return ((current - previous) / previous) * 100;
+  };
+
+  // Function to get the savings history for the chart
+  const getSavingsHistory = () => {
+    const savedHistory = localStorage.getItem("savingsHistory");
+    if (!savedHistory) return [];
+
+    try {
+      const history = JSON.parse(savedHistory);
+      return history.sort((a, b) => new Date(a.date) - new Date(b.date));
+    } catch (error) {
+      console.error("Error parsing savings history:", error);
+      return [];
+    }
+  };
+
+  // Replace the mock financialData with real data
+  const currentMonthExpenses = calculateCurrentMonthExpenses();
+  const lastMonthExpenses = calculateLastMonthExpenses();
+  const totalSavings = getTotalSavings();
+  const savingsHistory = getSavingsHistory();
+
+  // Build the financial data object
+  const financialData = {
+    // Use total savings as "Gross Income" for now
+    netWorth: totalSavings,
+    netWorthGrowth:
+      calculatePercentageChange(totalSavings, totalSavings * 0.9).toFixed(1) +
+      "%", // Simulated growth
+
+    // Use current month expenses as "Current Balance"
+    currentBalance: currentMonthExpenses,
+    currentBalanceGrowth:
+      calculatePercentageChange(
+        currentMonthExpenses,
+        lastMonthExpenses
+      ).toFixed(1) + "%",
+
+    // Format savings history data for the chart
+    chartData: savingsHistory.map((entry) => ({
+      date: entry.date,
+      value: entry.amount,
+    })),
+  };
+
+  // If the chart data is empty, provide some default data points
+  if (financialData.chartData.length === 0) {
+    const months = [
+      "Jan",
+      "Feb",
+      "Mar",
+      "Apr",
+      "May",
+      "Jun",
+      "Jul",
+      "Aug",
+      "Sep",
+      "Oct",
+      "Nov",
+      "Dec",
+    ];
+    const currentDate = new Date();
+    const currentMonth = currentDate.getMonth();
+
+    // Create empty data for the last 6 months
+    financialData.chartData = [];
+    for (let i = 5; i >= 0; i--) {
+      const monthIndex = (currentMonth - i + 12) % 12;
+      const year = currentDate.getFullYear() - (currentMonth - i < 0 ? 1 : 0);
+      financialData.chartData.push({
+        date: `${months[monthIndex]} ${year.toString().substr(2)}`,
+        value: 0,
+      });
+    }
+  }
+
+  // Format the netWorth and currentBalance for display
+  financialData.netWorth = financialData.netWorth || 0;
+  financialData.currentBalance = financialData.currentBalance || 0;
 
   return (
     <div className="dashboard-container">
@@ -164,8 +308,10 @@ const Dashboard = () => {
           <img src={humcashLogo} alt="HumCash Logo" className="header-logo" />
           <h1 className="app-title">ℍ𝕌𝕄ℂ𝔸𝕊ℍ</h1>
         </div>
+        {/* Added AlertsNotification component here */}
+        <AlertsNotification />
       </header>
-
+      {/* Rest of your component remains the same */}
       <div className="dashboard-content">
         <div className="financial-overview">
           <div className="financial-card">

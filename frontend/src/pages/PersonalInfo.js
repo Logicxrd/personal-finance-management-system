@@ -204,7 +204,7 @@ const PersonalInfo = () => {
             <div className="header-left" onClick={() => navigate(-1)}>
               <span className="back-icon">←</span>
             </div>
-            <h1 className="header-title">Personal info</h1>
+            <h1 className="header-title">Personal Info</h1>
             <div className="header-right"></div>
           </>
         )}

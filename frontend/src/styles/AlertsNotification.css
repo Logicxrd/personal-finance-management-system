@@ -1,0 +1,263 @@
+/* Updated AlertsNotification.css for a modern, cohesive design */
+
+.alerts-container {
+  position: relative;
+}
+
+.alerts-icon {
+  position: relative;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #d8d8ff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: all 0.2s ease;
+}
+
+.alerts-icon:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background-color: #c2c2fe;
+}
+
+.alerts-icon .icon {
+  font-size: 20px;
+  color: #333;
+}
+
+.badge {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  width: 24px;
+  height: 24px;
+  background-color: #846eff;
+  color: white;
+  border-radius: 50%;
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  border: 2px solid white;
+}
+
+.alerts-dropdown {
+  position: absolute;
+  top: 50px;
+  right: 0;
+  width: 340px;
+  max-height: 450px;
+  background-color: #f8f8ff;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  z-index: 1000;
+  overflow: hidden;
+  border: 1px solid rgba(230, 230, 255, 0.5);
+}
+
+.alerts-header {
+  padding: 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid rgba(230, 230, 255, 0.7);
+  background-color: #f8f8ff; /* Match the panel background */
+}
+
+.alerts-header h3 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+  color: #333;
+}
+
+.alerts-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.clear-all-button {
+  background-color: #d8d8ff;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  cursor: pointer;
+  color: #5042a9;
+  padding: 8px 16px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.08);
+}
+
+.clear-all-button:hover {
+  background-color: #c2c2fe;
+  transform: translateY(-1px);
+  box-shadow: 0 3px 7px rgba(0, 0, 0, 0.12);
+}
+
+.clear-all-button:active {
+  transform: translateY(0);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.close-button {
+  background: none;
+  border: none;
+  font-size: 18px;
+  cursor: pointer;
+  color: #666;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: all 0.2s ease;
+}
+
+.close-button:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+  color: #333;
+}
+
+.alerts-list {
+  max-height: 400px;
+  overflow-y: auto;
+  background-color: #f8f8ff;
+}
+
+.empty-alerts {
+  padding: 30px 16px;
+  text-align: center;
+  color: #777;
+  font-size: 15px;
+}
+
+.alert-item {
+  padding: 16px;
+  border-bottom: 1px solid rgba(230, 230, 255, 0.7);
+  display: flex;
+  align-items: flex-start;
+  transition: all 0.2s ease;
+}
+
+.alert-item:hover {
+  background-color: rgba(216, 216, 255, 0.3);
+}
+
+.alert-item.unread {
+  background-color: rgba(216, 216, 255, 0.5);
+}
+
+.alert-icon {
+  margin-right: 14px;
+  font-size: 24px;
+  padding-top: 2px;
+}
+
+.alert-content {
+  flex: 1;
+}
+
+.alert-title {
+  font-weight: 600;
+  font-size: 16px;
+  margin-bottom: 6px;
+  color: #333;
+}
+
+.alert-message {
+  font-size: 14px;
+  color: #555;
+  margin-bottom: 8px;
+  line-height: 1.4;
+}
+
+.alert-date {
+  font-size: 12px;
+  color: #888;
+}
+
+.alert-actions {
+  display: flex;
+  gap: 8px;
+  margin-left: 8px;
+}
+
+.mark-read-button,
+.delete-button {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.2s ease;
+}
+
+.mark-read-button {
+  background-color: #d8d8ff;
+  color: #333;
+}
+
+.mark-read-button:hover {
+  background-color: #c2c2fe;
+  transform: translateY(-2px);
+}
+
+.delete-button {
+  background-color: #444;
+  color: white;
+}
+
+.delete-button:hover {
+  background-color: #333;
+  transform: translateY(-2px);
+}
+
+/* Make sure the scrollbar looks nice */
+.alerts-list::-webkit-scrollbar {
+  width: 6px;
+}
+
+.alerts-list::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.02);
+}
+
+.alerts-list::-webkit-scrollbar-thumb {
+  background: #c2c2fe;
+  border-radius: 3px;
+}
+
+.alerts-list::-webkit-scrollbar-thumb:hover {
+  background: #a9a9fe;
+}
+
+/* Responsive adjustments */
+@media (max-width: 480px) {
+  .alerts-dropdown {
+    width: 300px;
+    right: -10px;
+  }
+
+  .alert-item {
+    padding: 12px;
+  }
+
+  .alert-title {
+    font-size: 14px;
+  }
+
+  .alert-message {
+    font-size: 13px;
+  }
+}

@@ -6,41 +6,12 @@
   justify-content: space-between;
   align-items: center;
   margin-bottom: 16px;
-  padding: 0 1rem;
 }
 
 .expenses-header h2 {
   margin: 0;
   font-size: 20px;
   font-weight: 600;
-}
-
-/* NEW: Add styles for the expenses-actions container */
-.expenses-actions {
-  display: flex;
-  gap: 12px;
-}
-
-/* Updated style for the Manage Budgets button */
-.manage-budgets-button {
-  background-color: #d8d8ff;
-  color: #333;
-  border: none;
-  border-radius: 8px;
-  padding: 10px 16px;
-  font-size: 14px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-  /* Add matching border */
-  border: 1px solid #e0e0fc;
-}
-
-.manage-budgets-button:hover {
-  background-color: #c2c2fe;
-  transform: translateY(-2px);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 /* Hamburger Menu Styles */
@@ -144,7 +115,6 @@
 }
 
 /* Style logout button with lavender color scheme */
-/* Style logout button with lavender color scheme */
 .menu-logout-button {
   width: 100%;
   padding: 12px;
@@ -184,7 +154,6 @@
   font-weight: 600;
   cursor: pointer;
   transition: all 0.2s ease;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
 .add-expense-button:hover {
@@ -224,13 +193,6 @@
 
 .expense-item-full:hover {
   background-color: #f0f0f0;
-}
-
-.expense-icon {
-  font-size: 1.5rem;
-  margin-right: 1rem;
-  display: flex;
-  align-items: center;
 }
 
 .expense-details {
@@ -370,253 +332,4 @@
 
 .modal-actions button:last-child:hover {
   background-color: #c2c2fe;
-}
-
-/* Analytics Card Styles */
-.analytics-card {
-  background-color: white;
-  border-radius: 12px;
-  padding: 20px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-  margin-bottom: 20px;
-  position: relative;
-}
-
-.chart-header {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  margin-bottom: 20px;
-}
-
-.chart-title {
-  font-size: 18px;
-  font-weight: 600;
-  color: #333;
-}
-
-.chart-details {
-  display: flex;
-  justify-content: space-between;
-}
-
-.month-info {
-  display: flex;
-  gap: 30px;
-}
-
-.current-month,
-.last-month {
-  display: flex;
-  flex-direction: column;
-}
-
-.label {
-  font-size: 16px;
-  color: #555;
-  margin-bottom: 4px;
-}
-
-.value {
-  font-size: 22px;
-  font-weight: 700;
-  color: #333;
-}
-
-.change-percentage {
-  font-size: 18px;
-  font-weight: 600;
-}
-
-.chart-container-pie {
-  height: 300px;
-  position: relative;
-}
-
-.empty-chart-container {
-  position: relative;
-  height: 300px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
-.no-expense-text {
-  font-size: 16px;
-  color: #999;
-  margin-bottom: 15px;
-  text-align: center;
-}
-
-.add-expense-link {
-  background-color: #d8d8ff;
-  border: none;
-  border-radius: 8px;
-  padding: 10px 20px;
-  font-size: 14px;
-  font-weight: 500;
-  cursor: pointer;
-  margin-bottom: 20px;
-  transition: all 0.2s ease;
-}
-
-.add-expense-link:hover {
-  background-color: #c2c2fe;
-  transform: translateY(-2px);
-}
-
-.empty-state-total {
-  margin-top: 20px;
-  text-align: center;
-}
-
-.chart-center-text {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  text-align: center;
-  z-index: 10;
-  background-color: white;
-  border-radius: 50%;
-  width: 100px;
-  height: 100px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
-.empty-state-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 100%;
-  padding: 20px;
-}
-
-.empty-state-message {
-  text-align: center;
-  color: #999;
-  margin-bottom: 20px;
-}
-
-.add-expense-button-container {
-  margin-bottom: 20px;
-}
-
-.empty-state-all {
-  text-align: center;
-}
-
-.total-label {
-  font-size: 14px;
-  color: #666;
-  margin-bottom: 4px;
-}
-
-.total-value {
-  font-size: 22px;
-  font-weight: 700;
-  color: #333;
-}
-
-.add-expense-link {
-  margin-top: 10px;
-  background-color: #d8d8ff;
-  border: none;
-  border-radius: 8px;
-  padding: 8px 16px;
-  cursor: pointer;
-  font-size: 14px;
-  font-weight: 500;
-  transition: all 0.2s ease;
-}
-
-.add-expense-link:hover {
-  background-color: #c2c2fe;
-  transform: translateY(-2px);
-}
-
-.custom-tooltip {
-  background-color: #fff;
-  border: 1px solid #eee;
-  border-radius: 8px;
-  padding: 12px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-}
-
-.custom-tooltip .category {
-  font-weight: 600;
-  margin: 0 0 4px;
-}
-
-.custom-tooltip .amount {
-  font-size: 18px;
-  margin: 0 0 4px;
-}
-
-.custom-tooltip .percent {
-  color: #666;
-  margin: 0;
-}
-
-.show-more-button {
-  text-align: center;
-  padding: 10px;
-  color: #6e6ee5;
-  font-weight: 600;
-  cursor: pointer;
-  margin-top: 10px;
-  border-top: 1px solid #eee;
-}
-
-.show-more-button:hover {
-  text-decoration: underline;
-}
-
-/* Responsive styles */
-@media (max-width: 768px) {
-  .expenses-actions {
-    flex-direction: column;
-    gap: 8px;
-  }
-
-  .month-info {
-    flex-direction: column;
-    gap: 10px;
-  }
-
-  .chart-container-pie {
-    height: 250px;
-  }
-}
-
-@media (max-width: 480px) {
-  .expense-item-full {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  .expense-icon {
-    margin-bottom: 8px;
-  }
-
-  .expense-details {
-    margin-left: 0;
-    width: 100%;
-    margin-bottom: 8px;
-  }
-
-  .expense-amount {
-    margin-right: 0;
-    margin-bottom: 8px;
-  }
-
-  .expense-actions {
-    width: 100%;
-    justify-content: flex-end;
-  }
 }

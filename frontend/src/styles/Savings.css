@@ -1,0 +1,298 @@
+/* Savings.css */
+
+.savings-card {
+  background-color: white;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  margin-bottom: 16px;
+  text-align: center;
+}
+
+.savings-total-header h2 {
+  font-size: 18px;
+  font-weight: 600;
+  margin: 0 0 10px;
+  color: #333;
+}
+
+.savings-total-amount {
+  font-size: 32px;
+  font-weight: 700;
+  margin-bottom: 8px;
+  color: #3e3e96;
+}
+
+.savings-growth {
+  font-size: 14px;
+  color: #4ecdc4;
+  font-weight: 500;
+}
+
+.savings-chart-card {
+  background-color: white;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  margin-bottom: 16px;
+}
+
+.chart-header {
+  margin-bottom: 16px;
+}
+
+.chart-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: #333;
+}
+
+.savings-goals-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.savings-goals-header h2 {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.add-goal-button {
+  background-color: #d8d8ff;
+  color: #333;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 16px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.add-goal-button:hover {
+  background-color: #c2c2fe;
+  transform: translateY(-2px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.savings-goals-container {
+  background-color: white;
+  border-radius: 12px;
+  padding: 16px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  margin-bottom: 16px;
+}
+
+.no-goals {
+  text-align: center;
+  padding: 20px;
+  color: #999;
+}
+
+.savings-goals-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.savings-goal-item {
+  display: flex;
+  align-items: flex-start;
+  padding: 16px;
+  border-radius: 8px;
+  background-color: #f8f8f8;
+  transition: background-color 0.2s ease;
+}
+
+.savings-goal-item:hover {
+  background-color: #f0f0f0;
+}
+
+.goal-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #d8d8ff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 16px;
+  font-size: 20px;
+}
+
+.goal-details {
+  flex: 1;
+}
+
+.goal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.goal-header h3 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.goal-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.goal-actions button {
+  background-color: #f0f0fc;
+  border: none;
+  border-radius: 4px;
+  padding: 6px 10px;
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.goal-actions button:hover {
+  background-color: #d8d8ff;
+}
+
+.contribute-button {
+  font-weight: 700;
+  font-size: 14px !important;
+  color: #3e3e96;
+}
+
+.goal-progress-info {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.goal-amounts {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.goal-target {
+  color: #666;
+  font-weight: 400;
+  margin-left: 4px;
+}
+
+.goal-deadline {
+  font-size: 14px;
+  color: #666;
+}
+
+.goal-progress-bar-container {
+  height: 8px;
+  background-color: #e1e1e1;
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: 4px;
+}
+
+.goal-progress-bar {
+  height: 100%;
+  background-color: #3e3e96;
+  border-radius: 4px;
+  transition: width 0.3s ease;
+}
+
+.goal-progress-percentage {
+  text-align: right;
+  font-size: 14px;
+  color: #666;
+}
+
+/* Icon Selector */
+.icon-selector {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.icon-option {
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  background-color: #f0f0f0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.icon-option:hover {
+  background-color: #e0e0e0;
+  transform: translateY(-2px);
+}
+
+.icon-option.selected {
+  background-color: #d8d8ff;
+  border: 2px solid #3e3e96;
+}
+
+/* Goal Summary in Contribute Modal */
+.goal-summary {
+  background-color: #f8f8f8;
+  border-radius: 8px;
+  padding: 12px;
+  margin: 16px 0;
+}
+
+.summary-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.summary-row:last-child {
+  margin-bottom: 0;
+  font-weight: 600;
+}
+
+/* Show More Button */
+.show-more-button {
+  text-align: center;
+  padding: 10px;
+  color: #6e6ee5;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.show-more-button:hover {
+  text-decoration: underline;
+}
+
+/* Error Message */
+.error-message {
+  color: #e74c3c;
+  font-size: 14px;
+  margin: 8px 0;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 600px) {
+  .savings-total-amount {
+    font-size: 28px;
+  }
+
+  .goal-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .goal-actions {
+    width: 100%;
+    justify-content: flex-end;
+  }
+}
