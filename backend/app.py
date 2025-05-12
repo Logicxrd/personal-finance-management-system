@@ -119,6 +119,7 @@ def balance ():
                                         SET AMOUNT = """ + str (value) + 'WHERE ID = ' + str (user_id) +
                                         ' AND ACCOUNT_TYPE = "CHECKING" AND ACCOUNT = "' + request.form ['bank'] + '"')
                 db.commit ()
+                return "OK"
         else:
                 return json.dumps (balance_info ())
 
@@ -138,6 +139,7 @@ def savings ():
                                         SET AMOUNT = """ + str (value) + 'WHERE ID = ' + str (user_id) +
                                         ' AND ACCOUNT_TYPE = "SAVINGS" AND ACCOUNT = "' + request.form ['bank'] + '"')
                 db.commit ()
+                return "OK"
         else:
                 return json.dumps (savings_info ())
 
@@ -149,6 +151,7 @@ def expenses ():
                                         VALUES (""" + str (user_id) + ', "' + request.form ['company'] + '", "' + request.form ['category' ]
                                         + '", "EXPENSE", ' + request.form ['date'] + ', ' + str (request.form ['amount']) + ');')
                 db.commit ()
+                return "OK"
         else:
                 return json.dumps (expense_info ())
 
