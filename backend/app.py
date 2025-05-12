@@ -105,9 +105,18 @@ def main_page ():
 @app.route ("/balance", methods=["POST", "GET"])
 def balance ():
         if request.method == "POST":
-                db_cursor.execute ("""INSERT INTO transactions (ID, ACCOUNT, TRANSACTION_TYPE, TRANSACTION_DATE, AMOUNT)
-                                        VALUES (""" + str (user_id) + ', "' + request.form ['bank'] + '", "DEPOSIT_CHECKING", ' + 
+                db_cursor.execute ("""INSERT INTO transactions (USER_ID, TRANSACTION_ID, ACCOUNT, TRANSACTION_TYPE, TRANSACTION_DATE, AMOUNT)
+                                        VALUES (""" + str (user_id) + ', ' + str (transaction_id) + ', "' + request.form ['bank'] + '", "DEPOSIT_CHECKING", ' + 
                                         request.form ['date'] + ', ' + str (request.form ['amount']) + ');')
+                db.commit ()
+                
+                db_cursor.execute ('SELECT AMOUNT FROM accounts WHERE ID = ' + str(user_id) +
+                                        ' AND ACCOUNT_TYPE = "CHECKING" AND ACCOUNT = "' + request.form ['bank'] + '"')
+                value = db_cursor.fetchone[0] + request.form ['amount']
+
+                db_cursor.execute ("""UPDATE accounts
+                                        SET AMOUNT = """ + str (value) + 'WHERE ID = ' + str (user_id) +
+                                        ' AND ACCOUNT_TYPE = "CHECKING" AND ACCOUNT = "' + request.form ['bank'] + '"')
                 db.commit ()
         else:
                 return json.dumps (balance_info ())
