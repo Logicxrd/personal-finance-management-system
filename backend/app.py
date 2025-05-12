@@ -112,7 +112,7 @@ def balance ():
                 
                 db_cursor.execute ('SELECT AMOUNT FROM accounts WHERE ID = ' + str(user_id) +
                                         ' AND ACCOUNT_TYPE = "CHECKING" AND ACCOUNT = "' + request.form ['bank'] + '"')
-                value = db_cursor.fetchone[0] + request.form ['amount']
+                value = db_cursor.fetchone()[0] + request.form ['amount']
 
                 db_cursor.execute ("""UPDATE accounts
                                         SET AMOUNT = """ + str (value) + 'WHERE ID = ' + str (user_id) +
@@ -131,7 +131,7 @@ def savings ():
 
                 db_cursor.execute ('SELECT AMOUNT FROM accounts WHERE ID = ' + str(user_id) +
                                         ' AND ACCOUNT_TYPE = "SAVINGS" AND ACCOUNT = "' + request.form ['bank'] + '"')
-                value = db_cursor.fetchone[0] + request.form ['amount']
+                value = db_cursor.fetchone()[0] + request.form ['amount']
 
                 db_cursor.execute ("""UPDATE accounts
                                         SET AMOUNT = """ + str (value) + 'WHERE ID = ' + str (user_id) +
