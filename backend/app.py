@@ -30,7 +30,9 @@ def expense_breakdown ():
         temp_names = db_cursor.fetchall ()
         db_cursor.execute ('SELECT AMOUNT FROM transactions WHERE USER_ID = ' + str(user_id) + ' AND TRANSACTION_TYPE = "EXPENSE"')
         temp_balances = db_cursor.fetchall ()
-        return {temp_names[i][0] : temp_balances[i][0] for i in range(temp_names.__len__ ())}
+        db_cursor.execute ('SELECT TRANSACTION_ID FROM transactions WHERE USER_ID = ' + str(user_id) + ' AND TRANSACTION_TYPE = "EXPENSE"')
+        temp_balances = db_cursor.fetchall ()
+        return {{temp_names[i][0] : temp_balances[i][0], "Transaction ID": temp_id[i][0]} for i in range(temp_names.__len__ ())}
 
 
 # fetches all checking balance data from accounts table
