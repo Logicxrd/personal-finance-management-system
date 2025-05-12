@@ -14,6 +14,7 @@ db_cursor = db.cursor ()
 
 # sample user id, to dynamically fetch at login
 user_id = 1
+transaction_id = 0
 
 # fetch first and last name from database, respectively
 def first_name ():
@@ -114,20 +115,22 @@ def balance ():
 @app.route ("/savings", methods=["POST", "GET"])
 def savings ():
         if request.method == "POST":
-                db_cursor.execute ("""INSERT INTO transactions (ID, ACCOUNT, TRANSACTION_TYPE, TRANSACTION_DATE, AMOUNT)
-                                        VALUES (""" + str (user_id) + ', "' + request.form ['bank'] + '", "DEPOSIT_SAVINGS", ' + 
+                db_cursor.execute ("""INSERT INTO transactions (USER_ID, TRANSACTION_ID, ACCOUNT, TRANSACTION_TYPE, TRANSACTION_DATE, AMOUNT)
+                                        VALUES (""" + str (user_id) + ', ' + str (transaction_id) + ', "' + request.form ['bank'] + '", "DEPOSIT_SAVINGS", ' + 
                                         request.form ['date'] + ', ' + str (request.form ['amount']) + ');')
                 db.commit ()
+                transaction_id += 1
         else:
                 return json.dumps (savings_info ())
 
 @app.route  ("/expenses", methods=["POST", "GET"])
 def expenses ():
         if request.method == "POST":
-                db_cursor.execute ("""INSERT INTO transactions (ID, ACCOUNT, TRANSACTION_TYPE, TRANSACTION_CATEGORY, TRANSACTION_DATE, AMOUNT)
-                                        VALUES (""" + str (user_id) + ', "' + request.form ['company'] + '", "' + request.form ['category' ]
+                db_cursor.execute ("""INSERT INTO transactions (USER_ID, TRANSACTION_ID, ACCOUNT, TRANSACTION_TYPE, TRANSACTION_CATEGORY, TRANSACTION_DATE, AMOUNT)
+                                        VALUES (""" + str (user_id) + ', ' + str (transaction_id) + ', "' + request.form ['company'] + '", "' + request.form ['category' ]
                                         + '", "EXPENSE", ' + request.form ['date'] + ', ' + str (request.form ['amount']) + ');')
                 db.commit ()
+                transaction_id += 1
         else:
                 return json.dumps (expense_info ())
 
