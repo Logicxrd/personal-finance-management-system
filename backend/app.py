@@ -104,6 +104,7 @@ def main_page ():
 
 @app.route ("/balance", methods=["POST", "GET"])
 def balance ():
+        global transaction_id
         if request.method == "POST":
                 db_cursor.execute ("""INSERT INTO transactions (USER_ID, TRANSACTION_ID, ACCOUNT, TRANSACTION_TYPE, TRANSACTION_DATE, AMOUNT)
                                         VALUES (""" + str (user_id) + ', ' + str (transaction_id) + ', "' + request.form ['bank'] + '", "DEPOSIT_CHECKING", ' + 
@@ -118,11 +119,13 @@ def balance ():
                                         SET AMOUNT = """ + str (value) + 'WHERE ID = ' + str (user_id) +
                                         ' AND ACCOUNT_TYPE = "CHECKING" AND ACCOUNT = "' + request.form ['bank'] + '"')
                 db.commit ()
+                transaction_id += 1
         else:
                 return json.dumps (balance_info ())
 
 @app.route ("/savings", methods=["POST", "GET"])
 def savings ():
+        global transaction_id
         if request.method == "POST":
                 db_cursor.execute ("""INSERT INTO transactions (USER_ID, TRANSACTION_ID, ACCOUNT, TRANSACTION_TYPE, TRANSACTION_DATE, AMOUNT)
                                         VALUES (""" + str (user_id) + ', ' + str (transaction_id) + ', "' + request.form ['bank'] + '", "DEPOSIT_SAVINGS", ' + 
@@ -144,6 +147,7 @@ def savings ():
 
 @app.route  ("/expenses", methods=["POST", "GET"])
 def expenses ():
+        global transaction_id
         if request.method == "POST":
                 db_cursor.execute ("""INSERT INTO transactions (USER_ID, TRANSACTION_ID, ACCOUNT, TRANSACTION_TYPE, TRANSACTION_CATEGORY, TRANSACTION_DATE, AMOUNT)
                                         VALUES (""" + str (user_id) + ', ' + str (transaction_id) + ', "' + request.form ['company'] + '", "' + request.form ['category' ]
