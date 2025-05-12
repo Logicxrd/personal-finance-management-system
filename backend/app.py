@@ -15,9 +15,13 @@ db_cursor = db.cursor ()
 # sample user id, to dynamically fetch at login
 user_id = 1
 
-# fetches username from database
-def user ():
-        db_cursor.execute ("SELECT USER FROM user_data WHERE ID = " + str(user_id))
+# fetch first and last name from database, respectively
+def first_name ():
+        db_cursor.execute ("SELECT FIRST_NAME FROM user_data WHERE ID = " + str(user_id))
+        return db_cursor.fetchone ()[0]
+
+def last_name ():
+        db_cursor.execute ("SELECT LAST_NAME FROM user_data WHERE ID = " + str(user_id))
         return db_cursor.fetchone ()[0]
 
 # fetches all expense data from transactions table
@@ -58,7 +62,8 @@ def net_worth ():
 # conversion of data points to dictionaries, to be converted to json when requested
 def summary_info ():
         return {
-                "User": user (),
+                "First Name": first_name (),
+                "Last Name": last_name (),
                 "Net Worth": net_worth (),
                 "Balance": balance_total (),
                 "Savings": savings_total (),
@@ -67,21 +72,24 @@ def summary_info ():
 
 def balance_info ():
         return {
-                "User": user (),
+                "First Name": first_name (),
+                "Last Name": last_name (),
                 "Balance": balance_total (),
                 "Balance Breakdown": balance_breakdown ()
         }
 
 def savings_info ():
         return {
-                "User": user (),
+                "First Name": first_name (),
+                "Last Name": last_name (),
                 "Savings": savings_total (),
                 "Savings Breakdown": savings_breakdown ()
         }
 
 def expense_info ():
         return {
-                "User": user (),
+                "First Name": first_name (),
+                "Last Name": last_name (),
                 "Expenses": expense_total (),
                 "Expense Breakdown": expense_breakdown ()
         }
@@ -130,7 +138,7 @@ def login ():
                 global user_id
                 user_id = request.form ["user_id"]
                 try:
-                        db_cursor.execute ("SELECT USER FROM user_data WHERE ID = " + str (user_id))
+                        db_cursor.execute ("SELECT FIRST_NAME FROM user_data WHERE ID = " + str (user_id))
                         temp_name = db_cursor.fetchone()[0]
                         return "OK"
                 except:
@@ -142,10 +150,10 @@ def login ():
 # takes user's name and phone number as username and user id
 def register ():
         if request.method == "POST":
-                full_name = request.form ["first_name"] + " " + request.form ["last_name"]
-                db_cursor.execute ("""INSERT INTO user_data (ID, USER, TRANSACTIONS_ID, ACCOUNTS_ID)
-                                        VALUES (""" + str (request.form ["user_id"]) + ', "' + full_name + '", '
-                                        + str(request.form ["user_id"]) + ', ' + str (request.form ["user_id"]) + ');')
+                db_cursor.execute ("""INSERT INTO user_data (ID, FIRST_NAME, LAST_NAME, TRANSACTIONS_ID, ACCOUNTS_ID)
+                                        VALUES (""" + str (request.form ["user_id"]) + ', "' + request.form ["first_name"] + '", "'
+                                         + request.form ["last_name"] + '", ' + str(request.form ["user_id"]) + ', '
+                                         + str (request.form ["user_id"]) + ');')
                 db.commit ()
                 return "OK"
 
