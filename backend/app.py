@@ -27,9 +27,9 @@ def last_name ():
 
 # fetches all expense data from transactions table
 def expense_breakdown ():
-        db_cursor.execute ('SELECT ACCOUNT FROM transactions WHERE ID = ' + str(user_id) + ' AND TRANSACTION_TYPE = "EXPENSE"')
+        db_cursor.execute ('SELECT ACCOUNT FROM transactions WHERE USER_ID = ' + str(user_id) + ' AND TRANSACTION_TYPE = "EXPENSE"')
         temp_names = db_cursor.fetchall ()
-        db_cursor.execute ('SELECT AMOUNT FROM transactions WHERE ID = ' + str(user_id) + ' AND TRANSACTION_TYPE = "EXPENSE"')
+        db_cursor.execute ('SELECT AMOUNT FROM transactions WHERE USER_ID = ' + str(user_id) + ' AND TRANSACTION_TYPE = "EXPENSE"')
         temp_balances = db_cursor.fetchall ()
         return {temp_names[i][0] : temp_balances[i][0] for i in range(temp_names.__len__ ())}
 
@@ -119,6 +119,16 @@ def savings ():
                                         VALUES (""" + str (user_id) + ', ' + str (transaction_id) + ', "' + request.form ['bank'] + '", "DEPOSIT_SAVINGS", ' + 
                                         request.form ['date'] + ', ' + str (request.form ['amount']) + ');')
                 db.commit ()
+
+                db_cursor.execute ('SELECT AMOUNT FROM accounts WHERE ID = ' + str(user_id) +
+                                        ' AND ACCOUNT_TYPE = "SAVINGS" AND ACCOUNT = "' + request.form ['bank'] + '"')
+                value = db_cursor.fetchone[0] + request.form ['amount']
+
+                db_cursor.execute ("""UPDATE accounts
+                                        SET AMOUNT = """ + str (value) + 'WHERE ID = ' + str (user_id) +
+                                        ' AND ACCOUNT_TYPE = "SAVINGS" AND ACCOUNT = "' + request.form ['bank'] + '"')
+                db.commit ()
+
                 transaction_id += 1
         else:
                 return json.dumps (savings_info ())
@@ -133,6 +143,10 @@ def expenses ():
                 transaction_id += 1
         else:
                 return json.dumps (expense_info ())
+
+# deletes items from database
+@app.route ("/delete", methods=["POST"])
+
 
 @app.route ("/login", methods=["POST"])
 # takes POST request for user_id and checks against database for validity
