@@ -32,7 +32,7 @@ def expense_breakdown ():
         temp_balances = db_cursor.fetchall ()
         db_cursor.execute ('SELECT TRANSACTION_ID FROM transactions WHERE USER_ID = ' + str(user_id) + ' AND TRANSACTION_TYPE = "EXPENSE"')
         temp_balances = db_cursor.fetchall ()
-        return {{temp_names[i][0] : temp_balances[i][0], "Transaction ID": temp_id[i][0]} for i in range(temp_names.__len__ ())}
+        return {"TRANSACTION" + str (i): {temp_names[i][0]: temp_balances[i][0], "Transaction ID": temp_id[i][0]} for i in range(temp_names.__len__ ())}
 
 
 # fetches all checking balance data from accounts table
@@ -148,8 +148,8 @@ def expenses ():
         global transaction_id
         if request.method == "POST":
                 db_cursor.execute ("""INSERT INTO transactions (USER_ID, ACCOUNT, TRANSACTION_TYPE, TRANSACTION_CATEGORY, TRANSACTION_DATE, AMOUNT)
-                                        VALUES (""" + str (user_id) + ', "' + request.form ['company'] + '", "' + request.form ['category' ]
-                                        + '", "EXPENSE", ' + request.form ['date'] + ', ' + str (request.form ['amount']) + ');')
+                                        VALUES (""" + str (user_id) + ', "' + request.form ['company'] + '", "EXPENSE", ' + request.form ['category' ]
+                                        + '", ' + request.form ['date'] + ', ' + str (request.form ['amount']) + ');')
                 db.commit ()
                 return "OK"
         else:
