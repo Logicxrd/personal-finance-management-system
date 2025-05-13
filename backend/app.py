@@ -31,8 +31,8 @@ def expense_breakdown ():
         db_cursor.execute ('SELECT AMOUNT FROM transactions WHERE USER_ID = ' + str(user_id) + ' AND TRANSACTION_TYPE = "EXPENSE"')
         temp_balances = db_cursor.fetchall ()
         db_cursor.execute ('SELECT TRANSACTION_ID FROM transactions WHERE USER_ID = ' + str(user_id) + ' AND TRANSACTION_TYPE = "EXPENSE"')
-        temp_balances = db_cursor.fetchall ()
-        return {"TRANSACTION" + str (i): {temp_names[i][0]: temp_balances[i][0], "Transaction ID": temp_id[i][0]} for i in range(temp_names.__len__ ())}
+        temp_ids = db_cursor.fetchall ()
+        return {"TRANSACTION " + str (i): {"Company": temp_names[i][0], "Amount": temp_balances[i][0], "Transaction ID": temp_ids[i][0]} for i in range(temp_names.__len__ ())}
 
 
 # fetches all checking balance data from accounts table
@@ -53,7 +53,7 @@ def savings_breakdown ():
 
 # calculated data points
 def expense_total ():
-        return sum (expense_breakdown ()[item] for item in expense_breakdown ())
+        return sum (expense_breakdown ()[item ] ["Amount"] for item in expense_breakdown ())
 def balance_total ():
         return sum (balance_breakdown ()[item] for item in balance_breakdown ())
 def savings_total ():
@@ -107,8 +107,8 @@ def main_page ():
 def balance ():
         if request.method == "POST":
                 db_cursor.execute ("""INSERT INTO transactions (USER_ID, ACCOUNT, TRANSACTION_TYPE, TRANSACTION_DATE, AMOUNT)
-                                        VALUES (""" + str (user_id) + ', "' + request.form ['bank'] + '", "DEPOSIT_CHECKING", ' + 
-                                        request.form ['date'] + ', ' + str (request.form ['amount']) + ');')
+                                        VALUES (""" + str (user_id) + ', "' + request.form ['bank'] + '", "DEPOSIT_CHECKING", "' + 
+                                        request.form ['date'] + '", ' + str (request.form ['amount']) + ');')
                 db.commit ()
                 
                 db_cursor.execute ('SELECT AMOUNT FROM accounts WHERE ID = ' + str(user_id) +
@@ -127,8 +127,8 @@ def balance ():
 def savings ():
         if request.method == "POST":
                 db_cursor.execute ("""INSERT INTO transactions (USER_ID, ACCOUNT, TRANSACTION_TYPE, TRANSACTION_DATE, AMOUNT)
-                                        VALUES (""" + str (user_id) + ', "' + request.form ['bank'] + '", "DEPOSIT_SAVINGS", ' + 
-                                        request.form ['date'] + ', ' + str (request.form ['amount']) + ');')
+                                        VALUES (""" + str (user_id) + ', "' + request.form ['bank'] + '", "DEPOSIT_SAVINGS", "' + 
+                                        request.form ['date'] + '", ' + str (request.form ['amount']) + ');')
                 db.commit ()
 
                 db_cursor.execute ('SELECT AMOUNT FROM accounts WHERE ID = ' + str(user_id) +
@@ -148,8 +148,8 @@ def expenses ():
         global transaction_id
         if request.method == "POST":
                 db_cursor.execute ("""INSERT INTO transactions (USER_ID, ACCOUNT, TRANSACTION_TYPE, TRANSACTION_CATEGORY, TRANSACTION_DATE, AMOUNT)
-                                        VALUES (""" + str (user_id) + ', "' + request.form ['company'] + '", "EXPENSE", ' + request.form ['category' ]
-                                        + '", ' + request.form ['date'] + ', ' + str (request.form ['amount']) + ');')
+                                        VALUES (""" + str (user_id) + ', "' + request.form ['company'] + '", "EXPENSE", "' + request.form ['category' ]
+                                        + '", "' + request.form ['date'] + '", ' + str (request.form ['amount']) + ');')
                 db.commit ()
                 return "OK"
         else:
